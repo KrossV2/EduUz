@@ -1,5 +1,6 @@
 using EduUz.Application.DiContainer;
 using EduUz.Infrastructure.DiContainer;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 var configurations = builder.Configuration;
@@ -14,6 +15,12 @@ builder.Services.AddSwaggerGen();
 // Di
 builder.Services.AddRepositories()
     .AddDatabase(configurations);
+
+// Serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
 
 var app = builder.Build();
 
