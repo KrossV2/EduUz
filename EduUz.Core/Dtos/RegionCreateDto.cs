@@ -1,6 +1,3 @@
 ﻿namespace EduUz.Core.Dtos;
 
-public class RegionCreateDto
-{
-    public string Name { get; set; }
-}
+public record RegionCreateDto(string Name);

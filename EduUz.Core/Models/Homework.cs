@@ -1,13 +1,13 @@
-﻿namespace EduUz.Core.Models;
+﻿    namespace EduUz.Core.Models;
 
-public class Homework
-{
-    public int Id { get; set; }
-    public int SubjectId { get; set; }
-    public Subject Subject { get; set; }
-    public int ClassId { get; set; }
-    public Class Class { get; set; }
-    public string Description { get; set; }
-    public string FileUrl { get; set; }
-    public DateTime DueDate { get; set; }
-}
+    public class Homework
+    {
+        public int Id { get; set; }
+        public int TeacherSubjectId { get; set; }
+        public virtual TeacherSubject TeacherSubject { get; set; }
+        public int ClassId { get; set; }
+        public virtual Class Class { get; set; }
+        public string Description { get; set; }
+        public DateTime DueDate { get; set; }
+        public string AttachmentPath { get; set; }
+    }

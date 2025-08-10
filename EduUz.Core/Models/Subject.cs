@@ -6,5 +6,5 @@ public class Subject
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public LanguageType Language { get; set; }
+    public virtual ICollection<TeacherSubject> TeacherSubjects { get; set; } = new List<TeacherSubject>();
 }

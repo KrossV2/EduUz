@@ -6,11 +6,8 @@ public class Teacher
 {
     public int Id { get; set; }
     public int UserId { get; set; }
-    public User User { get; set; }
-    public int SchoolId { get; set; }
-    public School School { get; set; }
-    public int SubjectId { get; set; }
-    public Subject Subject { get; set; }
+    public virtual User User { get; set; }
     public bool IsHomeroomTeacher { get; set; }
-    public ICollection<Timetable> Timetables { get; set; }
+    public virtual ICollection<TeacherSubject> Subjects { get; set; } = new List<TeacherSubject>();
+    public virtual ICollection<Class> HomeroomClasses { get; set; } = new List<Class>();
 }

@@ -6,9 +6,10 @@ public class BehaviorRecord
 {
     public int Id { get; set; }
     public int StudentId { get; set; }
-    public Student Student { get; set; }
-    public BehaviorType BehaviorType { get; set; }
+    public virtual Student Student { get; set; }  
+    public int TeacherId { get; set; }
+    public virtual Teacher Teacher { get; set; }
     public string Description { get; set; }
-    public DateTime Date { get; set; }
+    public int Points { get; set; }
+    public DateTime RecordDate { get; set; }
 }
-

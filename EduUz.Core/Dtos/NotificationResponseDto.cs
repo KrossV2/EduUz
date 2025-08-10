@@ -1,10 +1,9 @@
 ﻿namespace EduUz.Core.Dtos;
 
-public class NotificationResponseDto
-{
-    public int Id { get; set; }
-    public string ReceiverName { get; set; }
-    public string Message { get; set; }
-    public bool IsRead { get; set; }
-    public DateTime SentAt { get; set; }
-}
+public record NotificationResponseDto(
+    int Id,
+    string Message,
+    string Sender,
+    DateTime SentAt,
+    bool IsRead,
+    string NotificationType);

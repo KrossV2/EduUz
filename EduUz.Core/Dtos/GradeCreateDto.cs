@@ -2,10 +2,9 @@
 
 namespace EduUz.Core.Dtos;
 
-public class GradeCreateDto
-{
-    public int StudentId { get; set; }
-    public int SubjectId { get; set; }
-    public GradeType GradeType { get; set; }
-    public int Value { get; set; }
-}
+public record GradeCreateDto(
+    int StudentId,
+    int TeacherSubjectId,
+    GradeType GradeType,
+    int Value,
+    DateTime Date);

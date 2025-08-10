@@ -1,9 +1,7 @@
 ﻿namespace EduUz.Core.Dtos;
 
-public class ParentResponseDto
-{
-    public int Id { get; set; }
-    public string FullName { get; set; }
-    public string Email { get; set; }
-    public string StudentName { get; set; }
-}
+public record ParentResponseDto(
+    int Id,
+    string FullName,
+    List<string> Children,
+    string Email);

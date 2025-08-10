@@ -1,7 +1,7 @@
 ﻿namespace EduUz.Core.Dtos;
 
-public class NotificationCreateDto
-{
-    public int ReceiverId { get; set; }
-    public string Message { get; set; }
-}
+public record NotificationCreateDto(
+    int ReceiverId,
+    string Message,
+    string NotificationType,
+    int? RelatedEntityId);

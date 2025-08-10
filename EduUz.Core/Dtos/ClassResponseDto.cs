@@ -1,9 +1,9 @@
 ﻿namespace EduUz.Core.Dtos;
 
-public class ClassResponseDto
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Shift { get; set; }
-    public string TeacherName { get; set; }
-}
+public record ClassResponseDto(
+    int Id,
+    string Name,
+    string Shift,
+    string SchoolName,
+    string HomeroomTeacherName,
+    int StudentCount);

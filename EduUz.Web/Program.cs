@@ -1,4 +1,8 @@
+using EduUz.Application.DiContainer;
+using EduUz.Infrastructure.DiContainer;
+
 var builder = WebApplication.CreateBuilder(args);
+var configurations = builder.Configuration;
 
 // Add services to the container.
 
@@ -6,6 +10,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Di
+builder.Services.AddRepositories()
+    .AddDatabase(configurations);
 
 var app = builder.Build();
 
