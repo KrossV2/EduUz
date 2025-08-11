@@ -1,6 +1,9 @@
-﻿using EduUz.Application.Repositories;
+﻿using EduUz.Application.AutoMapper;
+using EduUz.Application.Repositories;
 using EduUz.Application.Repositories.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
 
 namespace EduUz.Application.DiContainer;
 
@@ -27,6 +30,9 @@ public static class DiContainer
         services.AddScoped<ITeacherSubjectRepository, TeacherSubjectRepository>();
         services.AddScoped<IParentStudentRepository, ParentStudentRepository>();
         services.AddScoped<IDirectorRepository, DirectorRepository>();
+
+
+        services.AddAutoMapper(typeof(MappingProfile));
 
         return services;
     }
