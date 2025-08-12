@@ -26,4 +26,10 @@
     <ProjectReference Include="..\EduUz.Infrastructure\EduUz.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mediator\Classes\GetAllClasses\" />
+    <Folder Include="Mediator\Classes\DeleteClasses\" />
+    <Folder Include="Mediator\Classes\UpdateClasses\" />
+  </ItemGroup>
+
 </Project>
