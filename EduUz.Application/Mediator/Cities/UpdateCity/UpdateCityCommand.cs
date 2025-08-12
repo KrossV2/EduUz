@@ -6,16 +6,16 @@ using MediatR;
 
 namespace EduUz.Application.Mediator.Cities.UpdateCity;
 
-public class UpdateCityCommand(CityUpdateDto dto , int id) : IRequest
+public class UpdateCityCommand(CityUpdateDto dto, int id) : IRequest<CityResponseDto>
 {
     public CityUpdateDto CityUpdateDto { get; set; } = dto;
     public int Id { get; set; } = id;
 }
 
 
-public class UpdateCityCommandHandler(ICityRepository repo , IMapper mapper) : IRequestHandler<UpdateCityCommand>
+public class UpdateCityCommandHandler(ICityRepository repo, IMapper mapper) : IRequestHandler<UpdateCityCommand, CityResponseDto>
 {
-    public async Task Handle(UpdateCityCommand request, CancellationToken cancellationToken)
+    public async Task<CityResponseDto> Handle(UpdateCityCommand request, CancellationToken cancellationToken)
     {
         var city = await repo.GetByIdAsync(request.Id);
 
@@ -26,5 +26,9 @@ public class UpdateCityCommandHandler(ICityRepository repo , IMapper mapper) : I
 
         repo.Update(city);
         await repo.SaveChangesAsync();
+
+        mapper.Map<CityResponseDto>(city);
+
+        return mapper.Map<CityResponseDto>(city);
     }
 }
