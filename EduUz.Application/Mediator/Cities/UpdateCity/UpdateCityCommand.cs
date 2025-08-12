@@ -27,8 +27,6 @@ public class UpdateCityCommandHandler(ICityRepository repo, IMapper mapper) : IR
         repo.Update(city);
         await repo.SaveChangesAsync();
 
-        mapper.Map<CityResponseDto>(city);
-
         return mapper.Map<CityResponseDto>(city);
     }
 }

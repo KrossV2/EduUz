@@ -25,8 +25,6 @@ public class UpdateSchoolCommandHandler(IMapper mapper, ISchoolRepository repo) 
         repo.Update(school);
         await repo.SaveChangesAsync();
 
-        mapper.Map<SchoolResponseDto>(school);
-
         return mapper.Map<SchoolResponseDto>(school);
     }
 }

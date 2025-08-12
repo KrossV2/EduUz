@@ -27,10 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mediator\Subjects\CreateSubject\" />
-    <Folder Include="Mediator\Subjects\DeleteSubject\" />
-    <Folder Include="Mediator\Subjects\GetAllSubjects\" />
-    <Folder Include="Mediator\Subjects\UpdateSubject\" />
+    <Folder Include="Mediator\Classes\GetAllClasses\" />
+    <Folder Include="Mediator\Classes\DeleteClasses\" />
+    <Folder Include="Mediator\Classes\UpdateClasses\" />
   </ItemGroup>
 
 </Project>
