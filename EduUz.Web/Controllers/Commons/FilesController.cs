@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace EduUz.Web.Controllers.Common;
+namespace EduUz.Web.Controllers.Commons;
 
 [ApiController]
 [Route("api/files")]

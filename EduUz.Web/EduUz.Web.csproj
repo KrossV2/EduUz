@@ -24,10 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\EduUz.Application\EduUz.Application.csproj" />
     <ProjectReference Include="..\EduUz.Core\EduUz.Core.csproj" />
     <ProjectReference Include="..\EduUz.Infrastructure\EduUz.Infrastructure.csproj" />

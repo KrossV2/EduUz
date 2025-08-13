@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace EduUz.Web.Controllers.Teacher;
+namespace EduUz.Web.Controllers.Teachers;
 
 [ApiController]
 [Route("api/teacher/homeworks")]

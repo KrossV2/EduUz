@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace EduUz.Web.Controllers.Student;
+namespace EduUz.Web.Controllers.Students;
 
 [ApiController]
 [Route("api/my")]

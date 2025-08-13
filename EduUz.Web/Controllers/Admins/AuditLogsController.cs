@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EduUz.Web.Controllers.Admin;
+namespace EduUz.Web.Controllers.Admins;
 
 [ApiController]
 [Route("api/audit-logs")]

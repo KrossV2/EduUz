@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace EduUz.Web.Controllers.Director;
+namespace EduUz.Web.Controllers.Directors;
 
 [ApiController]
 [Route("api/statistics")]
