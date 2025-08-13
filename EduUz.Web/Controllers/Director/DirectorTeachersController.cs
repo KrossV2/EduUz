@@ -1,4 +1,5 @@
 using EduUz.Core.Dtos;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -10,44 +11,25 @@ namespace EduUz.Web.Controllers.Director;
 [Authorize(Roles = "Director")]
 public class DirectorTeachersController : ControllerBase
 {
+    private readonly IMediator _mediator;
+
+    public DirectorTeachersController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     // GET /api/teachers
     [HttpGet]
     public async Task<IActionResult> GetTeachers()
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service
-        var teachers = new List<TeacherDto>
-        {
-            new() 
-            { 
-                Id = 1, 
-                FirstName = "Malika", 
-                LastName = "Karimova", 
-                Email = "malika@test.com", 
-                Username = "malika_teacher",
-                IsClassTeacher = true,
-                Subjects = new List<string> { "Matematika", "Fizika" },
-                Classes = new List<string> { "7-A", "8-B" },
-                SchoolId = schoolId,
-                IsActive = true
-            },
-            new() 
-            { 
-                Id = 2, 
-                FirstName = "Akmal", 
-                LastName = "Akhmedov", 
-                Email = "akmal@test.com", 
-                Username = "akmal_teacher",
-                IsClassTeacher = false,
-                Subjects = new List<string> { "Ona tili", "Adabiyot" },
-                Classes = new List<string> { "7-A", "7-B", "8-A" },
-                SchoolId = schoolId,
-                IsActive = true
-            }
-        };
+        // TODO: Create GetTeachersBySchoolQuery and Handler
+        // var query = new GetTeachersBySchoolQuery(schoolId);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
         
-        return Ok(teachers);
+        return Ok(new { message = "GetTeachersBySchoolQuery handler needed" });
     }
 
     // POST /api/teachers
@@ -56,19 +38,12 @@ public class DirectorTeachersController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service
-        var teacher = new TeacherDto
-        {
-            Id = new Random().Next(1, 1000),
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Email = request.Email,
-            IsClassTeacher = request.IsClassTeacher,
-            SchoolId = schoolId,
-            IsActive = true
-        };
+        // TODO: Create CreateTeacherByDirectorCommand and Handler
+        // var command = new CreateTeacherByDirectorCommand(request, schoolId);
+        // var result = await _mediator.Send(command);
+        // return CreatedAtAction(nameof(GetTeacher), new { id = result.Id }, result);
         
-        return CreatedAtAction(nameof(GetTeacher), new { id = teacher.Id }, teacher);
+        return Ok(new { message = "CreateTeacherByDirectorCommand handler needed" });
     }
 
     // GET /api/teachers/{id}
@@ -77,18 +52,12 @@ public class DirectorTeachersController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service and verify teacher belongs to school
-        var teacher = new TeacherDto
-        {
-            Id = id,
-            FirstName = "Sample",
-            LastName = "Teacher",
-            Email = "teacher@test.com",
-            SchoolId = schoolId,
-            IsActive = true
-        };
+        // TODO: Create GetTeacherByIdQuery and Handler
+        // var query = new GetTeacherByIdQuery(id, schoolId);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
         
-        return Ok(teacher);
+        return Ok(new { message = "GetTeacherByIdQuery handler needed" });
     }
 
     // PUT /api/teachers/{id}
@@ -97,8 +66,12 @@ public class DirectorTeachersController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service and verify teacher belongs to school
-        return Ok(new { message = "Teacher updated successfully" });
+        // TODO: Create UpdateTeacherCommand and Handler
+        // var command = new UpdateTeacherCommand(id, request, schoolId);
+        // var result = await _mediator.Send(command);
+        // return Ok(result);
+        
+        return Ok(new { message = "UpdateTeacherCommand handler needed" });
     }
 
     // DELETE /api/teachers/{id}
@@ -107,8 +80,12 @@ public class DirectorTeachersController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service and verify teacher belongs to school
-        return Ok(new { message = "Teacher deleted successfully" });
+        // TODO: Create DeleteTeacherCommand and Handler
+        // var command = new DeleteTeacherCommand(id, schoolId);
+        // var result = await _mediator.Send(command);
+        // return Ok(result);
+        
+        return Ok(new { message = "DeleteTeacherCommand handler needed" });
     }
 
     // GET /api/teachers/{id}/subjects
@@ -117,14 +94,12 @@ public class DirectorTeachersController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service
-        var subjects = new List<SubjectDto>
-        {
-            new() { Id = 1, Name = "Matematika", Code = "MATH" },
-            new() { Id = 2, Name = "Fizika", Code = "PHYS" }
-        };
+        // TODO: Create GetTeacherSubjectsQuery and Handler
+        // var query = new GetTeacherSubjectsQuery(id, schoolId);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
         
-        return Ok(subjects);
+        return Ok(new { message = "GetTeacherSubjectsQuery handler needed" });
     }
 
     // POST /api/teachers/{id}/subjects
@@ -133,8 +108,12 @@ public class DirectorTeachersController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service
-        return Ok(new { message = "Subject assigned to teacher successfully" });
+        // TODO: Create AssignSubjectToTeacherCommand and Handler
+        // var command = new AssignSubjectToTeacherCommand(id, request.SubjectId, schoolId);
+        // var result = await _mediator.Send(command);
+        // return Ok(result);
+        
+        return Ok(new { message = "AssignSubjectToTeacherCommand handler needed" });
     }
 
     // DELETE /api/teachers/{teacherId}/subjects/{subjectId}
@@ -143,7 +122,11 @@ public class DirectorTeachersController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service
-        return Ok(new { message = "Subject removed from teacher successfully" });
+        // TODO: Create RemoveSubjectFromTeacherCommand and Handler
+        // var command = new RemoveSubjectFromTeacherCommand(teacherId, subjectId, schoolId);
+        // var result = await _mediator.Send(command);
+        // return Ok(result);
+        
+        return Ok(new { message = "RemoveSubjectFromTeacherCommand handler needed" });
     }
 }

@@ -31,7 +31,7 @@ public class AuthController : ControllerBase
                 AccessToken = "sample_token",
                 RefreshToken = "sample_refresh_token",
                 ExpiresAt = DateTime.UtcNow.AddHours(1),
-                User = new UserDto { Id = 1, FirstName = "Test", LastName = "User", Email = request.EmailOrUsername, Role = "Admin" }
+                User = new AuthUserDto { Id = 1, FirstName = "Test", LastName = "User", Email = request.EmailOrUsername, Role = "Admin" }
             };
             return Ok(response);
         }
