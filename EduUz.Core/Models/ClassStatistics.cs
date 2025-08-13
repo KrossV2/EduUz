@@ -1,8 +1,8 @@
-﻿
-namespace EduUz.Core.Dtos;
+﻿namespace EduUz.Core.Models;
 
-public class ClassStatisticsDto
+public class ClassStatistics
 {
+    public int ClassId { get; set; }
     public string ClassName { get; set; }
     public int TotalStudents { get; set; }
     public double AverageGrade { get; set; }

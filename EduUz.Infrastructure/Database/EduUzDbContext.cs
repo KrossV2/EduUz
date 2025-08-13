@@ -38,6 +38,14 @@ public class EduUzDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(EduUzDbContext).Assembly);
+
+        modelBuilder.Entity<Student>()
+        .HasMany(s => s.AttendanceRecords)
+        .WithOne(a => a.Student);
+
+        modelBuilder.Entity<Teacher>()
+            .HasMany(t => t.TeacherSubjects)
+            .WithOne(ts => ts.Teacher);
     }
 }
 

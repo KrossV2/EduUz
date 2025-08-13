@@ -30,6 +30,7 @@ public static class DiContainer
         services.AddScoped<ITeacherSubjectRepository, TeacherSubjectRepository>();
         services.AddScoped<IParentStudentRepository, ParentStudentRepository>();
         services.AddScoped<IDirectorRepository, DirectorRepository>();
+        services.AddScoped<IStatisticsRepository, StatisticsRepository>();
 
 
         services.AddAutoMapper(typeof(MappingProfile));

@@ -100,6 +100,11 @@ public class MappingProfile : Profile
         CreateMap<Director, DirectorDto>();
         CreateMap<DirectorCreateDto, Director>();
         CreateMap<DirectorUpdateDto, Director>();
+
+        // Statistics
+        CreateMap<ClassStatistics, ClassStatisticsDto>();
+        CreateMap<TeacherStatistics, TeacherStatisticsDto>();
+        CreateMap<AttendanceStatistics, AttendanceStatisticsDto>();
     }
 }
 
