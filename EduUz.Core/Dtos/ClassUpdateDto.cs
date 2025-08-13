@@ -1,4 +1,4 @@
-﻿using EduUz.Core.Enums;
+using EduUz.Core.Enums;
 
 namespace EduUz.Core.Dtos;
 
