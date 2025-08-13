@@ -1,7 +1,8 @@
-﻿namespace EduUz.Core.Dtos;
+﻿namespace EduUz.Core.Models;
 
-public class TeacherStatisticsDto
+public class TeacherStatistics
 {
+    public int TeacherId { get; set; }
     public string TeacherName { get; set; }
     public int TotalSubjects { get; set; }
     public int TotalClasses { get; set; }
