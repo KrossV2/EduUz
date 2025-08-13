@@ -1,4 +1,5 @@
 using EduUz.Core.Dtos;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,96 +10,94 @@ namespace EduUz.Web.Controllers.Admin;
 [Authorize(Roles = "Admin")]
 public class UsersController : ControllerBase
 {
+    private readonly IMediator _mediator;
+
+    public UsersController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     // GET /api/users
     [HttpGet]
     public async Task<IActionResult> GetUsers([FromQuery] int? schoolId, [FromQuery] string? role, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
     {
-        // TODO: Implement with service
-        var users = new List<UserDto>
-        {
-            new() { Id = 1, FirstName = "Akmal", LastName = "Akhmedov", Email = "akmal@test.com", Username = "akmal_director", Role = "Director", SchoolId = 1, SchoolName = "1-son maktab" },
-            new() { Id = 2, FirstName = "Malika", LastName = "Karimova", Email = "malika@test.com", Username = "malika_teacher", Role = "Teacher", SchoolId = 1, SchoolName = "1-son maktab" }
-        };
+        // TODO: Create GetAllUsersQuery and Handler
+        // var query = new GetAllUsersQuery(schoolId, role, page, pageSize);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
         
-        return Ok(new { data = users, total = users.Count, page, pageSize });
+        return Ok(new { message = "GetAllUsersQuery handler needed" });
     }
 
     // GET /api/users/{id}
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUser(int id)
     {
-        // TODO: Implement with service
-        var user = new UserDto
-        {
-            Id = id,
-            FirstName = "Sample",
-            LastName = "User",
-            Email = "sample@test.com",
-            Username = "sample_user",
-            Role = "Teacher"
-        };
-        return Ok(user);
+        // TODO: Create GetUserByIdQuery and Handler
+        // var query = new GetUserByIdQuery(id);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
+        
+        return Ok(new { message = "GetUserByIdQuery handler needed" });
     }
 
     // POST /api/users/director
     [HttpPost("director")]
     public async Task<IActionResult> CreateDirector([FromBody] CreateDirectorRequest request)
     {
-        // TODO: Implement with service
-        var user = new UserDto
-        {
-            Id = new Random().Next(1, 1000),
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Email = request.Email,
-            Role = "Director",
-            SchoolId = request.SchoolId
-        };
-        return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
+        // TODO: Create CreateDirectorCommand and Handler
+        // var command = new CreateDirectorCommand(request.FirstName, request.LastName, request.Email, request.Password, request.SchoolId);
+        // var result = await _mediator.Send(command);
+        // return CreatedAtAction(nameof(GetUser), new { id = result.Id }, result);
+        
+        return Ok(new { message = "CreateDirectorCommand handler needed" });
     }
 
     // POST /api/users/teacher
     [HttpPost("teacher")]
     public async Task<IActionResult> CreateTeacher([FromBody] CreateTeacherRequest request)
     {
-        // TODO: Implement with service
-        var user = new UserDto
-        {
-            Id = new Random().Next(1, 1000),
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Email = request.Email,
-            Role = "Teacher",
-            SchoolId = request.SchoolId
-        };
-        return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
+        // TODO: Create CreateTeacherCommand and Handler
+        // var command = new CreateTeacherCommand(request.FirstName, request.LastName, request.Email, request.Password, request.SchoolId, request.SubjectIds, request.IsClassTeacher);
+        // var result = await _mediator.Send(command);
+        // return CreatedAtAction(nameof(GetUser), new { id = result.Id }, result);
+        
+        return Ok(new { message = "CreateTeacherCommand handler needed" });
     }
 
     // PUT /api/users/{id}
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserRequest request)
     {
-        // TODO: Implement with service
-        return Ok(new { message = "User updated successfully" });
+        // TODO: Create UpdateUserCommand and Handler
+        // var command = new UpdateUserCommand(id, request.FirstName, request.LastName, request.Email, request.IsActive);
+        // var result = await _mediator.Send(command);
+        // return Ok(result);
+        
+        return Ok(new { message = "UpdateUserCommand handler needed" });
     }
 
     // DELETE /api/users/{id}
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUser(int id)
     {
-        // TODO: Implement with service
-        return Ok(new { message = "User deleted successfully" });
+        // TODO: Create DeleteUserCommand and Handler
+        // var command = new DeleteUserCommand(id);
+        // var result = await _mediator.Send(command);
+        // return Ok(result);
+        
+        return Ok(new { message = "DeleteUserCommand handler needed" });
     }
 
     // GET /api/users/search
     [HttpGet("search")]
     public async Task<IActionResult> SearchUsers([FromQuery] string q, [FromQuery] int? schoolId, [FromQuery] string? role)
     {
-        // TODO: Implement with service
-        var users = new List<UserDto>
-        {
-            new() { Id = 1, FirstName = "Test", LastName = "User", Email = "test@test.com", Role = "Teacher" }
-        };
-        return Ok(users);
+        // TODO: Create SearchUsersQuery and Handler
+        // var query = new SearchUsersQuery(q, schoolId, role);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
+        
+        return Ok(new { message = "SearchUsersQuery handler needed" });
     }
 }

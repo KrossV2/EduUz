@@ -1,135 +1,111 @@
-using EduUz.Application.Mediator.Grades.CreateGrade;
-using EduUz.Application.Mediator.Grades.UpdateGrade;
-using EduUz.Application.Mediator.Grades.GradeFilter;
-using EduUz.Application.Mediator.Grades.RequestGradeChange;
-using EduUz.Core.Dtos;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace EduUz.Web.Controllers;
 
 [ApiController]
 [Route("api/grades")]
-public class GradesController(IMediator mediator) : ControllerBase
+[Authorize(Roles = "Teacher,Director,Admin")]
+public class GradesController : ControllerBase
 {
-    /// <summary>
-    /// Sinf baholari - Get grades by class ID
-    /// </summary>
-    /// <param name="classId">Class ID</param>
-    /// <returns>List of grades for the class</returns>
-    [HttpGet("class/{classId:int}")]
-    public async Task<ActionResult<List<GradeResponseDto>>> GetClassGrades(int classId)
+    private readonly IMediator _mediator;
+
+    public GradesController(IMediator mediator)
     {
-        try
-        {
-            var query = new GetFilteredGradesQuery(new GradeFilterDto(classId, null, null, null, null, null));
-            var result = await mediator.Send(query);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { message = "Error retrieving class grades", error = ex.Message });
-        }
+        _mediator = mediator;
     }
 
-    /// <summary>
-    /// O'quvchi baholari - Get grades by student ID
-    /// </summary>
-    /// <param name="studentId">Student ID</param>
-    /// <returns>List of grades for the student</returns>
-    [HttpGet("student/{studentId:int}")]
-    public async Task<ActionResult<List<GradeResponseDto>>> GetStudentGrades(int studentId)
+    // GET /api/grades/class/{classId}
+    [HttpGet("class/{classId}")]
+    public async Task<IActionResult> GetClassGrades(int classId)
     {
-        try
-        {
-            var query = new GetFilteredGradesQuery(new GradeFilterDto(null, null, studentId, null, null, null));
-            var result = await mediator.Send(query);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { message = "Error retrieving student grades", error = ex.Message });
-        }
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var role = User.FindFirstValue(ClaimTypes.Role)!;
+        var schoolId = User.FindFirstValue("SchoolId");
+        
+        // TODO: Create GetClassGradesQuery and Handler
+        // var query = new GetClassGradesQuery(classId, userId, role, schoolId);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
+        
+        return Ok(new { message = "GetClassGradesQuery handler needed" });
     }
 
-    /// <summary>
-    /// Fan baholari - Get grades by subject ID
-    /// </summary>
-    /// <param name="subjectId">Subject ID</param>
-    /// <returns>List of grades for the subject</returns>
-    [HttpGet("subject/{subjectId:int}")]
-    public async Task<ActionResult<List<GradeResponseDto>>> GetSubjectGrades(int subjectId)
+    // GET /api/grades/student/{studentId}
+    [HttpGet("student/{studentId}")]
+    public async Task<IActionResult> GetStudentGrades(int studentId)
     {
-        try
-        {
-            var query = new GetFilteredGradesQuery(new GradeFilterDto(null, subjectId, null, null, null, null));
-            var result = await mediator.Send(query);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { message = "Error retrieving subject grades", error = ex.Message });
-        }
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var role = User.FindFirstValue(ClaimTypes.Role)!;
+        
+        // TODO: Create GetStudentGradesQuery and Handler
+        // var query = new GetStudentGradesQuery(studentId, userId, role);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
+        
+        return Ok(new { message = "GetStudentGradesQuery handler needed" });
     }
 
-    /// <summary>
-    /// Baho qo'yish - Create a new grade
-    /// </summary>
-    /// <param name="gradeCreateDto">Grade creation data</param>
-    /// <returns>Created grade</returns>
+    // GET /api/grades/subject/{subjectId}
+    [HttpGet("subject/{subjectId}")]
+    public async Task<IActionResult> GetSubjectGrades(int subjectId)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var role = User.FindFirstValue(ClaimTypes.Role)!;
+        
+        // TODO: Create GetSubjectGradesQuery and Handler
+        // var query = new GetSubjectGradesQuery(subjectId, userId, role);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
+        
+        return Ok(new { message = "GetSubjectGradesQuery handler needed" });
+    }
+
+    // POST /api/grades
     [HttpPost]
-    public async Task<ActionResult<GradeResponseDto>> CreateGrade([FromBody] GradeCreateDto gradeCreateDto)
+    [Authorize(Roles = "Teacher")]
+    public async Task<IActionResult> CreateGrade([FromBody] object request)
     {
-        try
-        {
-            var command = new CreateGradeCommand(gradeCreateDto);
-            var result = await mediator.Send(command);
-            return CreatedAtAction(nameof(GetStudentGrades), new { studentId = gradeCreateDto.StudentId }, result);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { message = "Error creating grade", error = ex.Message });
-        }
+        var teacherId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        
+        // TODO: Create CreateGradeCommand and Handler
+        // var command = new CreateGradeCommand(request, teacherId);
+        // var result = await _mediator.Send(command);
+        // return Ok(result);
+        
+        return Ok(new { message = "CreateGradeCommand handler needed" });
     }
 
-    /// <summary>
-    /// Baho tahrirlash (so'rov yuboradi) - Request grade change
-    /// </summary>
-    /// <param name="id">Grade ID</param>
-    /// <param name="gradeChangeRequest">Grade change request data</param>
-    /// <returns>Change request result</returns>
-    [HttpPut("{id:int}")]
-    public async Task<ActionResult> RequestGradeChange(int id, [FromBody] GradeChangeRequestDto gradeChangeRequest)
+    // PUT /api/grades/{id}
+    [HttpPut("{id}")]
+    [Authorize(Roles = "Teacher")]
+    public async Task<IActionResult> RequestGradeChange(int id, [FromBody] object request)
     {
-        try
-        {
-            var command = new RequestGradeChangeCommand(gradeChangeRequest);
-            await mediator.Send(command);
-            return Ok(new { message = "Grade change request submitted successfully" });
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { message = "Error submitting grade change request", error = ex.Message });
-        }
+        var teacherId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        
+        // TODO: Create RequestGradeChangeCommand and Handler
+        // var command = new RequestGradeChangeCommand(id, request, teacherId);
+        // var result = await _mediator.Send(command);
+        // return Ok(result);
+        
+        return Ok(new { message = "RequestGradeChangeCommand handler needed" });
     }
 
-    /// <summary>
-    /// Get filtered grades with multiple criteria
-    /// </summary>
-    /// <param name="filter">Filter criteria</param>
-    /// <returns>Filtered grades</returns>
-    [HttpPost("filter")]
-    public async Task<ActionResult<List<GradeResponseDto>>> GetFilteredGrades([FromBody] GradeFilterDto filter)
+    // GET /api/grades/reports
+    [HttpGet("reports")]
+    public async Task<IActionResult> GetGradeReports([FromQuery] int? classId, [FromQuery] int? subjectId, [FromQuery] DateTime? from, [FromQuery] DateTime? to)
     {
-        try
-        {
-            var query = new GetFilteredGradesQuery(filter);
-            var result = await mediator.Send(query);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { message = "Error retrieving filtered grades", error = ex.Message });
-        }
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var role = User.FindFirstValue(ClaimTypes.Role)!;
+        var schoolId = User.FindFirstValue("SchoolId");
+        
+        // TODO: Create GetGradeReportsQuery and Handler
+        // var query = new GetGradeReportsQuery(classId, subjectId, from, to, userId, role, schoolId);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
+        
+        return Ok(new { message = "GetGradeReportsQuery handler needed" });
     }
 }

@@ -1,4 +1,5 @@
 using EduUz.Core.Dtos;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,38 +10,23 @@ namespace EduUz.Web.Controllers.Admin;
 [Authorize(Roles = "Admin")]
 public class SystemController : ControllerBase
 {
+    private readonly IMediator _mediator;
+
+    public SystemController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     // GET /api/system/stats
     [HttpGet("stats")]
     public async Task<IActionResult> GetSystemStats()
     {
-        // TODO: Implement with service
-        var stats = new SystemStatsDto
-        {
-            TotalSchools = 1250,
-            TotalStudents = 125000,
-            TotalTeachers = 8500,
-            TotalDirectors = 1250,
-            TotalRegions = 14,
-            TotalCities = 180,
-            ActiveUsers = 133750,
-            UsersByRole = new Dictionary<string, int>
-            {
-                { "Admin", 5 },
-                { "Director", 1250 },
-                { "Teacher", 8500 },
-                { "Student", 125000 },
-                { "Parent", 100000 }
-            },
-            SchoolsByRegion = new Dictionary<string, int>
-            {
-                { "Toshkent shahri", 150 },
-                { "Toshkent viloyati", 120 },
-                { "Samarqand viloyati", 100 },
-                { "Andijon viloyati", 90 }
-            }
-        };
+        // TODO: Create GetSystemStatsQuery and Handler
+        // var query = new GetSystemStatsQuery();
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
         
-        return Ok(stats);
+        return Ok(new { message = "GetSystemStatsQuery handler needed" });
     }
 
     // GET /api/system/health
@@ -48,17 +34,12 @@ public class SystemController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> GetSystemHealth()
     {
-        // TODO: Implement with service - check database, external services etc.
-        var health = new
-        {
-            Status = "Healthy",
-            Timestamp = DateTime.UtcNow,
-            Version = "1.0.0",
-            Database = new { Status = "Connected", ResponseTime = "15ms" },
-            Services = new { Auth = "Healthy", FileStorage = "Healthy" }
-        };
+        // TODO: Create GetSystemHealthQuery and Handler
+        // var query = new GetSystemHealthQuery();
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
         
-        return Ok(health);
+        return Ok(new { message = "GetSystemHealthQuery handler needed" });
     }
 
     // GET /api/system/version
@@ -66,13 +47,11 @@ public class SystemController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> GetSystemVersion()
     {
-        var version = new
-        {
-            Version = "1.0.0",
-            BuildDate = DateTime.UtcNow.AddDays(-30),
-            Environment = "Production"
-        };
+        // TODO: Create GetSystemVersionQuery and Handler
+        // var query = new GetSystemVersionQuery();
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
         
-        return Ok(version);
+        return Ok(new { message = "GetSystemVersionQuery handler needed" });
     }
 }

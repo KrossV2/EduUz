@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,13 @@ namespace EduUz.Web.Controllers.Admin;
 [Authorize(Roles = "Admin")]
 public class AuditLogsController : ControllerBase
 {
+    private readonly IMediator _mediator;
+
+    public AuditLogsController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     // GET /api/audit-logs
     [HttpGet]
     public async Task<IActionResult> GetAuditLogs(
@@ -20,37 +28,11 @@ public class AuditLogsController : ControllerBase
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 50)
     {
-        // TODO: Implement with service
-        var auditLogs = new List<object>
-        {
-            new 
-            { 
-                Id = 1, 
-                Action = "CREATE", 
-                EntityName = "User", 
-                EntityId = "123",
-                UserId = 1,
-                UserName = "admin@test.com",
-                Timestamp = DateTime.UtcNow.AddHours(-1),
-                IpAddress = "192.168.1.1",
-                SchoolId = 1,
-                SchoolName = "1-son maktab"
-            },
-            new 
-            { 
-                Id = 2, 
-                Action = "UPDATE", 
-                EntityName = "Grade", 
-                EntityId = "456",
-                UserId = 2,
-                UserName = "teacher@test.com",
-                Timestamp = DateTime.UtcNow.AddHours(-2),
-                IpAddress = "192.168.1.2",
-                SchoolId = 1,
-                SchoolName = "1-son maktab"
-            }
-        };
+        // TODO: Create GetAuditLogsQuery and Handler
+        // var query = new GetAuditLogsQuery(schoolId, userId, action, entityName, from, to, page, pageSize);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
         
-        return Ok(new { data = auditLogs, total = auditLogs.Count, page, pageSize });
+        return Ok(new { message = "GetAuditLogsQuery handler needed" });
     }
 }

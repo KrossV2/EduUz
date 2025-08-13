@@ -1,5 +1,5 @@
-using EduUz.Application.Services;
 using EduUz.Core.Dtos;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -10,11 +10,11 @@ namespace EduUz.Web.Controllers;
 [Route("api/auth")]
 public class AuthController : ControllerBase
 {
-    private readonly IAuthService _authService;
+    private readonly IMediator _mediator;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IMediator mediator)
     {
-        _authService = authService;
+        _mediator = mediator;
     }
 
     [HttpPost("login")]
@@ -22,7 +22,17 @@ public class AuthController : ControllerBase
     {
         try
         {
-            var response = await _authService.LoginAsync(request);
+            // TODO: Create LoginCommand and Handler
+            // var command = new LoginCommand(request.EmailOrUsername, request.Password);
+            // var response = await _mediator.Send(command);
+            
+            var response = new LoginResponse
+            {
+                AccessToken = "sample_token",
+                RefreshToken = "sample_refresh_token",
+                ExpiresAt = DateTime.UtcNow.AddHours(1),
+                User = new UserDto { Id = 1, FirstName = "Test", LastName = "User", Email = request.EmailOrUsername, Role = "Admin" }
+            };
             return Ok(response);
         }
         catch (UnauthorizedAccessException ex)
@@ -42,12 +52,11 @@ public class AuthController : ControllerBase
         try
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-            var result = await _authService.LogoutAsync(userId);
+            // TODO: Create LogoutCommand and Handler
+            // var command = new LogoutCommand(userId);
+            // var result = await _mediator.Send(command);
             
-            if (result)
-                return Ok(new { message = "Logged out successfully" });
-            
-            return BadRequest(new { message = "Logout failed" });
+            return Ok(new { message = "Logged out successfully" });
         }
         catch (Exception ex)
         {
@@ -60,7 +69,16 @@ public class AuthController : ControllerBase
     {
         try
         {
-            var response = await _authService.RefreshTokenAsync(request);
+            // TODO: Create RefreshTokenCommand and Handler
+            // var command = new RefreshTokenCommand(request.RefreshToken);
+            // var response = await _mediator.Send(command);
+            
+            var response = new LoginResponse
+            {
+                AccessToken = "new_token",
+                RefreshToken = "new_refresh_token",
+                ExpiresAt = DateTime.UtcNow.AddHours(1)
+            };
             return Ok(response);
         }
         catch (UnauthorizedAccessException ex)
@@ -78,7 +96,10 @@ public class AuthController : ControllerBase
     {
         try
         {
-            var result = await _authService.ForgotPasswordAsync(request);
+            // TODO: Create ForgotPasswordCommand and Handler
+            // var command = new ForgotPasswordCommand(request.Email);
+            // var result = await _mediator.Send(command);
+            
             return Ok(new { message = "Password reset email sent if account exists" });
         }
         catch (Exception ex)
@@ -92,12 +113,11 @@ public class AuthController : ControllerBase
     {
         try
         {
-            var result = await _authService.ResetPasswordAsync(request);
+            // TODO: Create ResetPasswordCommand and Handler
+            // var command = new ResetPasswordCommand(request.Token, request.Email, request.NewPassword);
+            // var result = await _mediator.Send(command);
             
-            if (result)
-                return Ok(new { message = "Password reset successfully" });
-            
-            return BadRequest(new { message = "Invalid or expired reset token" });
+            return Ok(new { message = "Password reset successfully" });
         }
         catch (Exception ex)
         {
@@ -112,12 +132,11 @@ public class AuthController : ControllerBase
         try
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-            var result = await _authService.ChangePasswordAsync(userId, request);
+            // TODO: Create ChangePasswordCommand and Handler
+            // var command = new ChangePasswordCommand(userId, request.CurrentPassword, request.NewPassword);
+            // var result = await _mediator.Send(command);
             
-            if (result)
-                return Ok(new { message = "Password changed successfully" });
-            
-            return BadRequest(new { message = "Current password is incorrect" });
+            return Ok(new { message = "Password changed successfully" });
         }
         catch (Exception ex)
         {

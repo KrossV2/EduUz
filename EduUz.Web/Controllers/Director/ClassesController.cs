@@ -1,4 +1,5 @@
 using EduUz.Core.Dtos;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -10,20 +11,25 @@ namespace EduUz.Web.Controllers.Director;
 [Authorize(Roles = "Director")]
 public class ClassesController : ControllerBase
 {
+    private readonly IMediator _mediator;
+
+    public ClassesController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     // GET /api/classes
     [HttpGet]
     public async Task<IActionResult> GetClasses()
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service
-        var classes = new List<ClassDto>
-        {
-            new() { Id = 1, Name = "7-A", Grade = 7, Section = "A", Shift = "Ertalab", ClassTeacherId = 1, ClassTeacherName = "Malika Karimova", StudentsCount = 25, SchoolId = schoolId, SchoolName = "1-son maktab" },
-            new() { Id = 2, Name = "8-B", Grade = 8, Section = "B", Shift = "Kechki", ClassTeacherId = 2, ClassTeacherName = "Akmal Akhmedov", StudentsCount = 23, SchoolId = schoolId, SchoolName = "1-son maktab" }
-        };
+        // TODO: Create GetClassesBySchoolQuery and Handler
+        // var query = new GetClassesBySchoolQuery(schoolId);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
         
-        return Ok(classes);
+        return Ok(new { message = "GetClassesBySchoolQuery handler needed", schoolId });
     }
 
     // POST /api/classes
@@ -32,19 +38,12 @@ public class ClassesController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service
-        var classDto = new ClassDto
-        {
-            Id = new Random().Next(1, 1000),
-            Name = request.Name,
-            Grade = request.Grade,
-            Section = request.Section,
-            Shift = request.Shift,
-            ClassTeacherId = request.ClassTeacherId,
-            SchoolId = schoolId
-        };
+        // TODO: Create CreateClassCommand and Handler
+        // var command = new CreateClassCommand(request.Name, request.Grade, request.Section, request.Shift, request.ClassTeacherId, schoolId);
+        // var result = await _mediator.Send(command);
+        // return CreatedAtAction(nameof(GetClass), new { id = result.Id }, result);
         
-        return CreatedAtAction(nameof(GetClass), new { id = classDto.Id }, classDto);
+        return Ok(new { message = "CreateClassCommand handler needed" });
     }
 
     // GET /api/classes/{id}
@@ -53,19 +52,12 @@ public class ClassesController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service and verify class belongs to school
-        var classDto = new ClassDto
-        {
-            Id = id,
-            Name = "7-A",
-            Grade = 7,
-            Section = "A",
-            Shift = "Ertalab",
-            StudentsCount = 25,
-            SchoolId = schoolId
-        };
+        // TODO: Create GetClassByIdQuery and Handler
+        // var query = new GetClassByIdQuery(id, schoolId);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
         
-        return Ok(classDto);
+        return Ok(new { message = "GetClassByIdQuery handler needed" });
     }
 
     // PUT /api/classes/{id}
@@ -74,8 +66,12 @@ public class ClassesController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service and verify class belongs to school
-        return Ok(new { message = "Class updated successfully" });
+        // TODO: Create UpdateClassCommand and Handler
+        // var command = new UpdateClassCommand(id, request.Name, request.Grade, request.Section, request.Shift, request.ClassTeacherId, schoolId);
+        // var result = await _mediator.Send(command);
+        // return Ok(result);
+        
+        return Ok(new { message = "UpdateClassCommand handler needed" });
     }
 
     // DELETE /api/classes/{id}
@@ -84,8 +80,12 @@ public class ClassesController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service and verify class belongs to school
-        return Ok(new { message = "Class deleted successfully" });
+        // TODO: Create DeleteClassCommand and Handler
+        // var command = new DeleteClassCommand(id, schoolId);
+        // var result = await _mediator.Send(command);
+        // return Ok(result);
+        
+        return Ok(new { message = "DeleteClassCommand handler needed" });
     }
 
     // GET /api/classes/{id}/students
@@ -94,14 +94,12 @@ public class ClassesController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service
-        var students = new List<object>
-        {
-            new { Id = 1, FirstName = "Ali", LastName = "Akbarov", Username = "Ali_Akbarov_7A", Email = "ali@test.com" },
-            new { Id = 2, FirstName = "Malika", LastName = "Rahimova", Username = "Malika_Rahimova_7A", Email = "malika@test.com" }
-        };
+        // TODO: Create GetClassStudentsQuery and Handler
+        // var query = new GetClassStudentsQuery(id, schoolId);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
         
-        return Ok(students);
+        return Ok(new { message = "GetClassStudentsQuery handler needed" });
     }
 
     // POST /api/classes/{id}/students
@@ -110,7 +108,11 @@ public class ClassesController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service
-        return Ok(new { message = "Student added to class successfully" });
+        // TODO: Create AddStudentToClassCommand and Handler
+        // var command = new AddStudentToClassCommand(id, request, schoolId);
+        // var result = await _mediator.Send(command);
+        // return Ok(result);
+        
+        return Ok(new { message = "AddStudentToClassCommand handler needed" });
     }
 }

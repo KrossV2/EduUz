@@ -1,4 +1,5 @@
 using EduUz.Core.Dtos;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -10,58 +11,25 @@ namespace EduUz.Web.Controllers.Director;
 [Authorize(Roles = "Director")]
 public class TimetablesController : ControllerBase
 {
+    private readonly IMediator _mediator;
+
+    public TimetablesController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     // GET /api/timetables
     [HttpGet]
     public async Task<IActionResult> GetTimetables([FromQuery] int? classId, [FromQuery] string? dayOfWeek)
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service
-        var timetables = new List<TimetableDto>
-        {
-            new() 
-            { 
-                Id = 1, 
-                ClassId = 1, 
-                ClassName = "7-A", 
-                DayOfWeek = "Dushanba", 
-                Period = 1, 
-                StartTime = "08:00", 
-                EndTime = "08:45", 
-                SubjectId = 1, 
-                SubjectName = "Matematika", 
-                TeacherId = 1, 
-                TeacherName = "Malika Karimova",
-                Room = "101"
-            },
-            new() 
-            { 
-                Id = 2, 
-                ClassId = 1, 
-                ClassName = "7-A", 
-                DayOfWeek = "Dushanba", 
-                Period = 2, 
-                StartTime = "08:55", 
-                EndTime = "09:40", 
-                SubjectId = 2, 
-                SubjectName = "Ona tili", 
-                TeacherId = 2, 
-                TeacherName = "Akmal Akhmedov",
-                Room = "102"
-            }
-        };
+        // TODO: Create GetTimetablesQuery and Handler
+        // var query = new GetTimetablesQuery(schoolId, classId, dayOfWeek);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
         
-        if (classId.HasValue)
-        {
-            timetables = timetables.Where(t => t.ClassId == classId.Value).ToList();
-        }
-        
-        if (!string.IsNullOrEmpty(dayOfWeek))
-        {
-            timetables = timetables.Where(t => t.DayOfWeek == dayOfWeek).ToList();
-        }
-        
-        return Ok(timetables);
+        return Ok(new { message = "GetTimetablesQuery handler needed" });
     }
 
     // POST /api/timetables
@@ -70,21 +38,12 @@ public class TimetablesController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service and verify class belongs to school
-        var timetable = new TimetableDto
-        {
-            Id = new Random().Next(1, 1000),
-            ClassId = request.ClassId,
-            DayOfWeek = request.DayOfWeek,
-            Period = request.Period,
-            StartTime = request.StartTime,
-            EndTime = request.EndTime,
-            SubjectId = request.SubjectId,
-            TeacherId = request.TeacherId,
-            Room = request.Room
-        };
+        // TODO: Create CreateTimetableCommand and Handler
+        // var command = new CreateTimetableCommand(request, schoolId);
+        // var result = await _mediator.Send(command);
+        // return CreatedAtAction(nameof(GetTimetable), new { id = result.Id }, result);
         
-        return CreatedAtAction(nameof(GetTimetable), new { id = timetable.Id }, timetable);
+        return Ok(new { message = "CreateTimetableCommand handler needed" });
     }
 
     // GET /api/timetables/{id}
@@ -93,22 +52,12 @@ public class TimetablesController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service and verify timetable belongs to school
-        var timetable = new TimetableDto
-        {
-            Id = id,
-            ClassId = 1,
-            ClassName = "7-A",
-            DayOfWeek = "Dushanba",
-            Period = 1,
-            StartTime = "08:00",
-            EndTime = "08:45",
-            SubjectName = "Matematika",
-            TeacherName = "Malika Karimova",
-            Room = "101"
-        };
+        // TODO: Create GetTimetableByIdQuery and Handler
+        // var query = new GetTimetableByIdQuery(id, schoolId);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
         
-        return Ok(timetable);
+        return Ok(new { message = "GetTimetableByIdQuery handler needed" });
     }
 
     // PUT /api/timetables/{id}
@@ -117,8 +66,12 @@ public class TimetablesController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service and verify timetable belongs to school
-        return Ok(new { message = "Timetable updated successfully" });
+        // TODO: Create UpdateTimetableCommand and Handler
+        // var command = new UpdateTimetableCommand(id, request, schoolId);
+        // var result = await _mediator.Send(command);
+        // return Ok(result);
+        
+        return Ok(new { message = "UpdateTimetableCommand handler needed" });
     }
 
     // DELETE /api/timetables/{id}
@@ -127,8 +80,12 @@ public class TimetablesController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service and verify timetable belongs to school
-        return Ok(new { message = "Timetable deleted successfully" });
+        // TODO: Create DeleteTimetableCommand and Handler
+        // var command = new DeleteTimetableCommand(id, schoolId);
+        // var result = await _mediator.Send(command);
+        // return Ok(result);
+        
+        return Ok(new { message = "DeleteTimetableCommand handler needed" });
     }
 
     // GET /api/timetables/class/{classId}/week
@@ -137,20 +94,11 @@ public class TimetablesController : ControllerBase
     {
         var schoolId = int.Parse(User.FindFirstValue("SchoolId")!);
         
-        // TODO: Implement with service and verify class belongs to school
-        var weeklySchedule = new Dictionary<string, List<TimetableDto>>
-        {
-            ["Dushanba"] = new List<TimetableDto>
-            {
-                new() { Period = 1, StartTime = "08:00", EndTime = "08:45", SubjectName = "Matematika", TeacherName = "Malika Karimova", Room = "101" },
-                new() { Period = 2, StartTime = "08:55", EndTime = "09:40", SubjectName = "Ona tili", TeacherName = "Akmal Akhmedov", Room = "102" }
-            },
-            ["Seshanba"] = new List<TimetableDto>
-            {
-                new() { Period = 1, StartTime = "08:00", EndTime = "08:45", SubjectName = "Fizika", TeacherName = "Malika Karimova", Room = "201" }
-            }
-        };
+        // TODO: Create GetWeeklyTimetableQuery and Handler
+        // var query = new GetWeeklyTimetableQuery(classId, schoolId);
+        // var result = await _mediator.Send(query);
+        // return Ok(result);
         
-        return Ok(weeklySchedule);
+        return Ok(new { message = "GetWeeklyTimetableQuery handler needed" });
     }
 }
