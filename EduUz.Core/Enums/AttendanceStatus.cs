@@ -1,8 +1,9 @@
-﻿namespace EduUz.Core.Enums;
+namespace EduUz.Core.Enums;
 
 public enum AttendanceStatus
 {
-    Present = 1,
-    Absent = 2,
-    Late = 3
+    Present = 0,
+    Absent = 1,
+    Late = 2,
+    Excused = 3
 }
