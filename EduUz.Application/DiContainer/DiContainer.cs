@@ -34,6 +34,7 @@ public static class DiContainer
 
 
         services.AddAutoMapper(typeof(MappingProfile));
+
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
         return services;

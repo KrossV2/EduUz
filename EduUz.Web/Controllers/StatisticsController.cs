@@ -11,10 +11,7 @@ namespace EduUz.Web.Controllers;
 [Route("api/statistics")]
 public class StatisticsController(IMediator mediator) : ControllerBase
 {
-    /// <summary>
-    /// Sinflar statistikasi - Get class statistics
-    /// </summary>
-    /// <returns>List of class statistics</returns>
+
     [HttpGet("classes")]
     public async Task<ActionResult<List<ClassStatistics>>> GetClassStatistics()
     {
@@ -30,10 +27,6 @@ public class StatisticsController(IMediator mediator) : ControllerBase
         }
     }
 
-    /// <summary>
-    /// O'qituvchilar statistikasi - Get teacher statistics
-    /// </summary>
-    /// <returns>List of teacher statistics</returns>
     [HttpGet("teachers")]
     public async Task<ActionResult<List<TeacherStatistics>>> GetTeacherStatistics()
     {
@@ -49,10 +42,6 @@ public class StatisticsController(IMediator mediator) : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Davomat statistikasi - Get attendance statistics
-    /// </summary>
-    /// <returns>List of attendance statistics</returns>
     [HttpGet("attendance")]
     public async Task<ActionResult<List<AttendanceStatistics>>> GetAttendanceStatistics()
     {
