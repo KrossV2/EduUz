@@ -1,4 +1,4 @@
-﻿using EduUz.Application.Repositories.Interfaces;
+using EduUz.Application.Repositories.Interfaces;
 using EduUz.Core.Enums;
 using EduUz.Core.Models;
 using EduUz.Infrastructure.Database;
@@ -35,19 +35,19 @@ public class StatisticsRepository(EduUzDbContext context) : IStatisticsRepositor
     {
         return await context.Teachers
             .Include(t => t.User) // User ma'lumotlari kerak
-            .Include(t => t.TeacherSubjects)
-                .ThenInclude(ts => ts.Grades) // Baholar kerak
+            .Include(t => t.TeacherSubjects) // TeacherSubjects
             .Select(t => new TeacherStatistics
             {
                 TeacherId = t.Id,
                 TeacherName = t.User.FirstName + " " + t.User.LastName, // To'g'ri ism
                 TotalSubjects = t.TeacherSubjects.Count,
-                TotalClasses = t.TeacherSubjects
-                    .Select(ts => ts.ClassId)
+                TotalClasses = context.LessonSchedules
+                    .Where(ls => t.TeacherSubjects.Select(ts => ts.Id).Contains(ls.TeacherSubjectId))
+                    .Select(ls => ls.ClassId)
                     .Distinct()
                     .Count(),
-                AverageStudentGrade = t.TeacherSubjects
-                    .SelectMany(ts => ts.Grades)
+                AverageStudentGrade = context.Grades
+                    .Where(g => t.TeacherSubjects.Select(ts => ts.Id).Contains(g.TeacherSubjectId))
                     .DefaultIfEmpty() // Agar baho bo'lmasa
                     .Average(g => g != null ? g.Value : 0)
             })

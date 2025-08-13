@@ -1,9 +1,9 @@
-﻿using EduUz.Application.AutoMapper;
+using EduUz.Application.AutoMapper;
 using EduUz.Application.Repositories;
 using EduUz.Application.Repositories.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
+using System.Reflection;
 
 namespace EduUz.Application.DiContainer;
 
@@ -34,6 +34,7 @@ public static class DiContainer
 
 
         services.AddAutoMapper(typeof(MappingProfile));
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
         return services;
     }
