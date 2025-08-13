@@ -10,7 +10,7 @@ public class LoginResponse
 {
     public string AccessToken { get; set; }
     public string RefreshToken { get; set; }
-    public UserDto User { get; set; }
+    public AuthUserDto User { get; set; }
     public DateTime ExpiresAt { get; set; }
 }
 
@@ -37,7 +37,7 @@ public class ChangePasswordRequest
     public string NewPassword { get; set; }
 }
 
-public class UserDto
+public class AuthUserDto
 {
     public int Id { get; set; }
     public string FirstName { get; set; }
