@@ -11,17 +11,23 @@ public class StatisticsRepository(EduUzDbContext context) : IStatisticsRepositor
     public async Task<List<ClassStatistics>> GetClassStatisticsAsync()
     {
         return await context.Classes
-            .Include(c => c.Students) // Students ni include qilish kerak
-            .Include(c => c.Students).ThenInclude(s => s.Grades) // Grades ni ham
+            .Include(c => c.Students)
+                .ThenInclude(s => s.Grades)
+            .Include(c => c.Students)
+                .ThenInclude(s => s.AttendanceRecords)
             .Select(c => new ClassStatistics
             {
                 ClassId = c.Id,
                 ClassName = c.Name,
                 TotalStudents = c.Students.Count,
                 AverageGrade = c.Students
-                    .Where(s => s.Grades.Any()) // Faqat bahosi bor o'quvchilarni hisobga olamiz
-                    .Average(s => s.Grades.Average(g => g.Value)),
-                AttendancePercentage = c.Students.Any() && c.Students.First().AttendanceRecords.Any()
+                    .Where(s => s.Grades.Any())
+                    .SelectMany(s => s.Grades)
+                    .DefaultIfEmpty()
+                    .Average(g => g != null ? g.Value : 0),
+                AttendancePercentage = c.Students
+                    .SelectMany(s => s.AttendanceRecords)
+                    .Any()
                     ? (int)(c.Students
                         .SelectMany(s => s.AttendanceRecords)
                         .Count(a => a.Status == AttendanceStatus.Present) * 100.0 /
@@ -34,12 +40,12 @@ public class StatisticsRepository(EduUzDbContext context) : IStatisticsRepositor
     public async Task<List<TeacherStatistics>> GetTeacherStatisticsAsync()
     {
         return await context.Teachers
-            .Include(t => t.User) // User ma'lumotlari kerak
-            .Include(t => t.TeacherSubjects) // TeacherSubjects
+            .Include(t => t.User)
+            .Include(t => t.TeacherSubjects)
             .Select(t => new TeacherStatistics
             {
                 TeacherId = t.Id,
-                TeacherName = t.User.FirstName + " " + t.User.LastName, // To'g'ri ism
+                TeacherName = $"{t.User.FirstName} {t.User.LastName}",
                 TotalSubjects = t.TeacherSubjects.Count,
                 TotalClasses = context.LessonSchedules
                     .Where(ls => t.TeacherSubjects.Select(ts => ts.Id).Contains(ls.TeacherSubjectId))
@@ -48,7 +54,7 @@ public class StatisticsRepository(EduUzDbContext context) : IStatisticsRepositor
                     .Count(),
                 AverageStudentGrade = context.Grades
                     .Where(g => t.TeacherSubjects.Select(ts => ts.Id).Contains(g.TeacherSubjectId))
-                    .DefaultIfEmpty() // Agar baho bo'lmasa
+                    .DefaultIfEmpty()
                     .Average(g => g != null ? g.Value : 0)
             })
             .ToListAsync();
@@ -58,7 +64,7 @@ public class StatisticsRepository(EduUzDbContext context) : IStatisticsRepositor
     {
         return await context.Classes
             .Include(c => c.Students)
-                .ThenInclude(s => s.AttendanceRecords) // Davomat ma'lumotlari
+                .ThenInclude(s => s.AttendanceRecords)
             .Select(c => new AttendanceStatistics
             {
                 ClassId = c.Id,
@@ -72,7 +78,9 @@ public class StatisticsRepository(EduUzDbContext context) : IStatisticsRepositor
                 LateCount = c.Students
                     .SelectMany(s => s.AttendanceRecords)
                     .Count(a => a.Status == AttendanceStatus.Late),
-                AttendanceRate = c.Students.SelectMany(s => s.AttendanceRecords).Any()
+                AttendanceRate = c.Students
+                    .SelectMany(s => s.AttendanceRecords)
+                    .Any()
                     ? (c.Students
                         .SelectMany(s => s.AttendanceRecords)
                         .Count(a => a.Status == AttendanceStatus.Present) * 100.0 /

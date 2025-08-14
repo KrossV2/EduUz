@@ -1,6 +1,21 @@
 @EduUz.Web_HostAddress = http://localhost:5169
 
-GET {{EduUz.Web_HostAddress}}/weatherforecast/
+# Statistics API Endpoints
+
+## Get Class Statistics
+GET {{EduUz.Web_HostAddress}}/api/statistics/classes
+Accept: application/json
+
+###
+
+## Get Teacher Statistics
+GET {{EduUz.Web_HostAddress}}/api/statistics/teachers
+Accept: application/json
+
+###
+
+## Get Attendance Statistics
+GET {{EduUz.Web_HostAddress}}/api/statistics/attendance
 Accept: application/json
 
 ###
