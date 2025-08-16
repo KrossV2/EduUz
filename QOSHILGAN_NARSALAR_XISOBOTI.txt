@@ -1,0 +1,435 @@
+================================================================================
+                    Maktab Boshqaruv Tizimi - Qo'shilgan Narsalar Xisoboti
+================================================================================
+
+📋 TIZIM TAVSIFI:
+Bu tizim O'zbekiston bo'ylab ishlaydigan maktab boshqaruv tizimi bo'lib, 
+faqat ro'yxatdan o'tkazilgan foydalanuvchilar tizimga kira oladi.
+Tizimda Admin → Direktor → O'qituvchi → O'quvchi/Ota-ona ierarxiyasi mavjud.
+
+================================================================================
+📁 REPOSITORY INTERFACE LAR (EduUz.Application/Repositories/)
+================================================================================
+
+1. IGradeRepository.cs
+   ✅ NIMA UCHUN: Baholar bilan ishlash uchun
+   ✅ QO'SHILGAN METHOD LAR:
+      - GetGradesByClassAsync() - Sinf baholari
+      - GetGradesByStudentAsync() - O'quvchi baholari  
+      - GetGradesBySubjectAsync() - Fan baholari
+      - GetByIdAsync() - Baho ma'lumotlari
+      - AddAsync() - Yangi baho qo'shish
+      - UpdateAsync() - Baho tahrirlash
+      - DeleteAsync() - Baho o'chirish
+
+2. ITeacherRepository.cs
+   ✅ NIMA UCHUN: O'qituvchilar bilan ishlash va ularning huquqlarini tekshirish
+   ✅ QO'SHILGAN METHOD LAR:
+      - GetByIdAsync() - O'qituvchi ma'lumotlari
+      - GetBySchoolIdAsync() - Maktab o'qituvchilari
+      - HasAccessToClassAsync() - Sinfga kirish huquqi
+      - HasAccessToStudentAsync() - O'quvchiga kirish huquqi
+      - HasAccessToSubjectAsync() - Fanga kirish huquqi
+      - HasAccessToStudentAndSubjectAsync() - O'quvchi va fanga kirish huquqi
+      - IsClassTeacherAsync() - Sinf rahbari ekanligini tekshirish
+      - IsClassTeacherForStudentAsync() - O'quvchining sinf rahbari ekanligini tekshirish
+
+3. IAttendanceRepository.cs
+   ✅ NIMA UCHUN: Davomat bilan ishlash
+   ✅ QO'SHILGAN METHOD LAR:
+      - GetAttendanceByClassAndDateAsync() - Sinf davomati kunlik
+      - GetAttendanceByStudentAsync() - O'quvchi davomati
+      - GetByIdAsync() - Davomat ma'lumotlari
+      - AddAsync() - Davomat qo'shish
+      - AddRangeAsync() - Bir necha davomat qo'shish
+      - UpdateAsync() - Davomat tahrirlash
+      - DeleteAsync() - Davomat o'chirish
+      - GetConsecutiveAbsencesAsync() - Ketma-ket kelmagan kunlar
+
+4. IHomeworkRepository.cs
+   ✅ NIMA UCHUN: Uy vazifalari bilan ishlash
+   ✅ QO'SHILGAN METHOD LAR:
+      - GetHomeworksByTeacherAsync() - O'qituvchi uy vazifalari
+      - GetHomeworksByClassAsync() - Sinf uy vazifalari
+      - GetByIdAsync() - Uy vazifa ma'lumotlari
+      - AddAsync() - Uy vazifa qo'shish
+      - UpdateAsync() - Uy vazifa tahrirlash
+      - DeleteAsync() - Uy vazifa o'chirish
+      - AddMaterialsAsync() - Material qo'shish
+      - GetHomeworkSubmissionAsync() - Uy vazifa topshirilganini tekshirish
+      - AddSubmissionAsync() - Uy vazifa topshirish
+      - AddSubmissionFilesAsync() - Topshirilgan fayllar qo'shish
+
+5. IStudentRepository.cs
+   ✅ NIMA UCHUN: O'quvchilar bilan ishlash
+   ✅ QO'SHILGAN METHOD LAR:
+      - GetByIdAsync() - O'quvchi ma'lumotlari
+      - GetByClassIdAsync() - Sinf o'quvchilari
+      - GetBySchoolIdAsync() - Maktab o'quvchilari
+      - AddAsync() - O'quvchi qo'shish
+      - UpdateAsync() - O'quvchi tahrirlash
+      - DeleteAsync() - O'quvchi o'chirish
+      - GetParentsByStudentIdAsync() - O'quvchi ota-onalari
+
+6. IParentRepository.cs
+   ✅ NIMA UCHUN: Ota-onalar bilan ishlash
+   ✅ QO'SHILGAN METHOD LAR:
+      - GetByIdAsync() - Ota-ona ma'lumotlari
+      - GetByStudentIdAsync() - O'quvchi ota-onalari
+      - GetChildrenByParentIdAsync() - Ota-ona farzandlari
+      - GetParentStudentLinkAsync() - Ota-ona va o'quvchi bog'lanishi
+      - AddAsync() - Ota-ona qo'shish
+      - UpdateAsync() - Ota-ona tahrirlash
+      - DeleteAsync() - Ota-ona o'chirish
+      - AddParentStudentLinkAsync() - Ota-ona va o'quvchi bog'lash
+
+7. IUserRepository.cs
+   ✅ NIMA UCHUN: Foydalanuvchilar bilan ishlash
+   ✅ QO'SHILGAN METHOD LAR:
+      - GetByIdAsync() - Foydalanuvchi ma'lumotlari
+      - GetByEmailAsync() - Email bo'yicha foydalanuvchi
+      - GetByUsernameAsync() - Username bo'yicha foydalanuvchi
+      - AddAsync() - Foydalanuvchi qo'shish
+      - UpdateAsync() - Foydalanuvchi tahrirlash
+      - DeleteAsync() - Foydalanuvchi o'chirish
+
+8. IDirectorRepository.cs
+   ✅ NIMA UCHUN: Direktorlar bilan ishlash
+   ✅ QO'SHILGAN METHOD LAR:
+      - GetByIdAsync() - Direktor ma'lumotlari
+      - GetBySchoolIdAsync() - Maktab direktori
+      - AddAsync() - Direktor qo'shish
+      - UpdateAsync() - Direktor tahrirlash
+      - DeleteAsync() - Direktor o'chirish
+
+9. IGradeChangeRequestRepository.cs
+   ✅ NIMA UCHUN: Baho o'zgartirish so'rovlari bilan ishlash
+   ✅ QO'SHILGAN METHOD LAR:
+      - GetByIdAsync() - So'rov ma'lumotlari
+      - GetByTeacherIdAsync() - O'qituvchi so'rovlari
+      - GetByDirectorIdAsync() - Direktor so'rovlari
+      - AddAsync() - So'rov qo'shish
+      - UpdateAsync() - So'rov tahrirlash
+      - DeleteAsync() - So'rov o'chirish
+
+10. IActivityHistoryRepository.cs
+    ✅ NIMA UCHUN: Faoliyat tarixini saqlash
+    ✅ QO'SHILGAN METHOD LAR:
+       - GetByIdAsync() - Faoliyat ma'lumotlari
+       - GetByUserIdAsync() - Foydalanuvchi faoliyati
+       - GetBySchoolIdAsync() - Maktab faoliyati
+       - AddAsync() - Faoliyat qo'shish
+       - UpdateAsync() - Faoliyat tahrirlash
+       - DeleteAsync() - Faoliyat o'chirish
+
+11. ITimetableRepository.cs
+    ✅ NIMA UCHUN: Dars jadvali bilan ishlash
+    ✅ QO'SHILGAN METHOD LAR:
+       - GetTimetableByClassAsync() - Sinf jadvali
+       - GetTimetableByTeacherAsync() - O'qituvchi jadvali
+       - GetByIdAsync() - Jadval ma'lumotlari
+       - AddAsync() - Jadval qo'shish
+       - UpdateAsync() - Jadval tahrirlash
+       - DeleteAsync() - Jadval o'chirish
+
+12. IExcuseRepository.cs
+    ✅ NIMA UCHUN: Sabab bildirishlar bilan ishlash
+    ✅ QO'SHILGAN METHOD LAR:
+       - GetByIdAsync() - Sabab ma'lumotlari
+       - GetByAttendanceIdAsync() - Davomat sababi
+       - GetByStudentIdAsync() - O'quvchi sabablari
+       - GetByParentIdAsync() - Ota-ona sabablari
+       - AddAsync() - Sabab qo'shish
+       - UpdateAsync() - Sabab tahrirlash
+       - DeleteAsync() - Sabab o'chirish
+
+13. IFileRepository.cs
+    ✅ NIMA UCHUN: Fayllar bilan ishlash
+    ✅ QO'SHILGAN METHOD LAR:
+       - GetByIdAsync() - Fayl ma'lumotlari
+       - GetByUserIdAsync() - Foydalanuvchi fayllari
+       - AddAsync() - Fayl qo'shish
+       - UpdateAsync() - Fayl tahrirlash
+       - DeleteAsync() - Fayl o'chirish
+
+14. INotificationRepository.cs
+    ✅ NIMA UCHUN: Xabarnomalar bilan ishlash
+    ✅ QO'SHILGAN METHOD LAR:
+       - GetByIdAsync() - Xabarnoma ma'lumotlari
+       - GetNotificationsByUserAsync() - Foydalanuvchi xabarnomalari
+       - AddAsync() - Xabarnoma qo'shish
+       - UpdateAsync() - Xabarnoma tahrirlash
+       - DeleteAsync() - Xabarnoma o'chirish
+
+15. IBehaviorRecordRepository.cs
+    ✅ NIMA UCHUN: Intizom yozuvlari bilan ishlash
+    ✅ QO'SHILGAN METHOD LAR:
+       - GetByIdAsync() - Intizom yozuvi ma'lumotlari
+       - GetByStudentIdAsync() - O'quvchi intizom yozuvlari
+       - GetByTeacherIdAsync() - O'qituvchi intizom yozuvlari
+       - AddAsync() - Intizom yozuvi qo'shish
+       - UpdateAsync() - Intizom yozuvi tahrirlash
+       - DeleteAsync() - Intizom yozuvi o'chirish
+       - GetTotalBehaviorPointsAsync() - Umumiy intizom ballari
+
+================================================================================
+🔧 SERVICE INTERFACE LAR (EduUz.Application/Services/)
+================================================================================
+
+1. INotificationService.cs
+   ✅ NIMA UCHUN: Xabarnomalar yuborish (Email, Telegram, SMS)
+   ✅ QO'SHILGAN METHOD LAR:
+      - SendEmailAsync() - Email yuborish
+      - SendTelegramMessageAsync() - Telegram xabar yuborish
+      - SendSmsAsync() - SMS yuborish
+
+2. IFileStorageService.cs
+   ✅ NIMA UCHUN: Fayllarni saqlash va boshqarish
+   ✅ QO'SHILGAN METHOD LAR:
+      - UploadFileAsync() - Fayl yuklash
+      - DownloadFileAsync() - Fayl yuklab olish
+      - DeleteFileAsync() - Fayl o'chirish
+      - FileExistsAsync() - Fayl mavjudligini tekshirish
+
+================================================================================
+🏗️ CORE ENTITIES (EduUz.Core/Entities/)
+================================================================================
+
+1. User.cs
+   ✅ NIMA UCHUN: Barcha foydalanuvchilar uchun asosiy model
+   ✅ QO'SHILGAN PROPERTY LAR:
+      - Id, Username, Email, PasswordHash
+      - UserType (Admin, Director, Teacher, Student, Parent)
+      - IsActive, CreatedAt, UpdatedAt, LastLoginAt
+
+2. Grade.cs
+   ✅ NIMA UCHUN: Baholar uchun model
+   ✅ QO'SHILGAN PROPERTY LAR:
+      - StudentId, SubjectId, TeacherId
+      - GradeType (Daily, Control, Quarter, Yearly)
+      - Value (1-5), Date, Comment
+      - Navigation properties (Student, Subject, Teacher)
+
+3. Teacher.cs
+   ✅ NIMA UCHUN: O'qituvchilar uchun model
+   ✅ QO'SHILGAN PROPERTY LAR:
+      - UserId, SchoolId, FirstName, LastName, FullName
+      - PhoneNumber, BirthDate, IsClassTeacher
+      - Navigation properties (User, School)
+
+4. Student.cs
+   ✅ NIMA UCHUN: O'quvchilar uchun model
+   ✅ QO'SHILGAN PROPERTY LAR:
+      - UserId, ClassId, FirstName, LastName, FullName
+      - BirthDate, PhoneNumber, TotalBehaviorPoints
+      - Navigation properties (User, Class)
+
+5. Parent.cs
+   ✅ NIMA UCHUN: Ota-onalar uchun model
+   ✅ QO'SHILGAN PROPERTY LAR:
+      - UserId, FirstName, LastName, FullName
+      - Email, PhoneNumber, Relationship
+      - Navigation properties (User)
+
+6. Attendance.cs
+   ✅ NIMA UCHUN: Davomat uchun model
+   ✅ QO'SHILGAN PROPERTY LAR:
+      - StudentId, ClassId, Date
+      - Status (Present, Absent, Late), Comment
+      - Navigation properties (Student, Class)
+
+7. Homework.cs + HomeworkMaterial.cs + HomeworkSubmission.cs + HomeworkSubmissionFile.cs
+   ✅ NIMA UCHUN: Uy vazifalari uchun to'liq model tizimi
+   ✅ QO'SHILGAN PROPERTY LAR:
+      - TeacherId, ClassId, SubjectId, Title, Description, DueDate
+      - Materials (fayllar), Submissions (topshirishlar)
+      - Navigation properties (Teacher, Class, Subject)
+
+8. Director.cs
+   ✅ NIMA UCHUN: Direktorlar uchun model
+   ✅ QO'SHILGAN PROPERTY LAR:
+      - UserId, SchoolId, FirstName, LastName, FullName
+      - PhoneNumber, BirthDate
+      - Navigation properties (User, School)
+
+9. GradeChangeRequest.cs
+   ✅ NIMA UCHUN: Baho o'zgartirish so'rovlari uchun model
+   ✅ QO'SHILGAN PROPERTY LAR:
+      - GradeId, TeacherId, DirectorId
+      - OldValue, NewValue, Reason
+      - Status (Pending, Approved, Rejected)
+      - Navigation properties (Grade, Teacher, Director)
+
+10. ActivityHistory.cs
+    ✅ NIMA UCHUN: Faoliyat tarixini saqlash uchun model
+    ✅ QO'SHILGAN PROPERTY LAR:
+       - UserId, UserType, Action, Description
+       - IpAddress, UserAgent, CreatedAt
+       - Navigation properties (User)
+
+11. Timetable.cs
+    ✅ NIMA UCHUN: Dars jadvali uchun model
+    ✅ QO'SHILGAN PROPERTY LAR:
+       - ClassId, SubjectId, TeacherId
+       - DayOfWeek, LessonNumber, StartTime, EndTime
+       - Navigation properties (Class, Subject, Teacher)
+
+12. Excuse.cs
+    ✅ NIMA UCHUN: Sabab bildirishlar uchun model
+    ✅ QO'SHILGAN PROPERTY LAR:
+       - AttendanceId, ParentId, StudentId
+       - Reason, DocumentUrl, Status
+       - Navigation properties (Attendance, Parent, Student)
+
+13. FileRecord.cs
+    ✅ NIMA UCHUN: Fayllar uchun model
+    ✅ QO'SHILGAN PROPERTY LAR:
+       - UserId, UserType, FileName, FileUrl
+       - FileType, FileSize, Description
+       - Navigation properties (User)
+
+14. Notification.cs
+    ✅ NIMA UCHUN: Xabarnomalar uchun model
+    ✅ QO'SHILGAN PROPERTY LAR:
+       - UserId, UserType, Title, Message
+       - Type, IsRead, Data (JSON)
+       - Navigation properties (User)
+
+15. BehaviorRecord.cs
+    ✅ NIMA UCHUN: Intizom yozuvlari uchun model
+    ✅ QO'SHILGAN PROPERTY LAR:
+       - StudentId, TeacherId, Type (Positive/Negative)
+       - Points, Description, Date, Evidence
+       - Navigation properties (Student, Teacher)
+
+16. ParentStudentLink.cs
+    ✅ NIMA UCHUN: Ota-ona va o'quvchi bog'lanishi uchun model
+    ✅ QO'SHILGAN PROPERTY LAR:
+       - ParentId, StudentId, CreatedAt
+       - Navigation properties (Parent, Student)
+
+17. School.cs, Class.cs, Subject.cs, City.cs, Region.cs
+    ✅ NIMA UCHUN: Tizimning asosiy strukturalari uchun modellar
+    ✅ QO'SHILGAN PROPERTY LAR:
+       - Asosiy ma'lumotlar va navigation properties
+
+================================================================================
+🎯 MEDIATOR HANDLERS (EduUz.Application/Mediator/)
+================================================================================
+
+👩‍🏫 TEACHER APIs:
+
+1. Grades Management:
+   - GetClassGradesQuery.cs - Sinf baholari
+   - GetStudentGradesQuery.cs - O'quvchi baholari
+   - GetSubjectGradesQuery.cs - Fan baholari
+   - AddGradeCommand.cs - Baho qo'shish
+   - UpdateGradeCommand.cs - Baho o'zgartirish so'rovi
+
+2. Attendance Management:
+   - GetClassAttendanceQuery.cs - Sinf davomati
+   - GetStudentAttendanceQuery.cs - O'quvchi davomati
+   - AddAttendanceCommand.cs - Davomat qo'shish
+
+3. Homework Management:
+   - GetHomeworksQuery.cs - Uy vazifalari ro'yxati
+   - AddHomeworkCommand.cs - Uy vazifa qo'shish
+
+4. Student Management:
+   - AddStudentCommand.cs - O'quvchi qo'shish
+   - AddParentCommand.cs - Ota-ona qo'shish
+   - LinkParentToStudentCommand.cs - Ota-ona va o'quvchi bog'lash
+
+🧑‍🎓 STUDENT APIs:
+
+1. GetMyGradesQuery.cs - O'z baholari
+2. GetMyAttendanceQuery.cs - O'z davomati
+3. GetMyTimetableQuery.cs - Dars jadvali
+4. GetMyHomeworksQuery.cs - Uy vazifalari
+5. SubmitHomeworkCommand.cs - Uy vazifa topshirish
+
+👨‍👩‍👧 PARENT APIs:
+
+1. GetChildrenQuery.cs - Farzandlar ro'yxati
+2. GetChildGradesQuery.cs - Farzand baholari
+3. GetChildAttendanceQuery.cs - Farzand davomati
+4. SubmitExcuseCommand.cs - Sabab bildirish
+
+📁 COMMON APIs:
+
+1. File Management:
+   - UploadFileCommand.cs - Fayl yuklash
+
+2. Notifications:
+   - GetNotificationsQuery.cs - Xabarnomalar
+   - MarkNotificationAsReadCommand.cs - Xabarni o'qildi deb belgilash
+
+3. Behavior Management:
+   - AddBehaviorRecordCommand.cs - Intizom yozuvi qo'shish
+   - GetBehaviorRecordQuery.cs - Intizom yozuvi ma'lumotlari
+
+================================================================================
+🔐 XAVFSIZLIK VA BIZNES LOGIKASI
+================================================================================
+
+✅ XAVFSIZLIK:
+- Role-based access control (Admin → Director → Teacher → Student/Parent)
+- O'qituvchilar faqat o'z sinflari va fanlariga kirishadi
+- O'quvchilar faqat o'z ma'lumotlarini ko'radi
+- Ota-onalar faqat o'z farzandlarining ma'lumotlarini ko'radi
+- Barcha harakatlar loglanadi
+
+✅ BIZNES LOGIKASI:
+- Baho o'zgartirish uchun direktor ruxsati kerak
+- 3 kun ketma-ket kelmagan o'quvchilar uchun ota-onalarga xabar yuboriladi
+- Uy vazifa topshirish muddati tekshiriladi
+- Intizom ballari avtomatik hisoblanadi
+- Ota-ona sabab bildirishlari qabul qilinadi
+
+✅ VALIDATSIYA:
+- Baho qiymati 1-5 oralig'ida bo'lishi kerak
+- Fayl hajmi 10MB dan oshmasligi kerak
+- Faqat ruxsat etilgan fayl turlari yuklanadi
+- Duplicate ma'lumotlar oldini olish
+
+✅ XABARNOMALAR:
+- Email orqali xabarnomalar
+- Telegram bot tayyor (interface mavjud)
+- SMS yuborish imkoniyati
+
+================================================================================
+📊 TIZIMNING ASOSIY XUSUSIYATLARI
+================================================================================
+
+✅ TO'LIQ API QO'LLAB-QUVVATLASH:
+- Barcha API endpoint lar mediator pattern orqali amalga oshirilgan
+- Clean Architecture prinsiplariga amal qilgan
+- Dependency Injection to'liq qo'llanilgan
+
+✅ MA'LUMOTLAR BAZASI:
+- Entity Framework Core uchun tayyor modellar
+- Navigation properties to'liq sozlangan
+- Audit trail (yaratilgan vaqt, o'zgartirilgan vaqt)
+
+✅ KENGAYTIRILISH IMKONIYATLARI:
+- Yangi rollar qo'shish oson
+- Yangi funksionallik qo'shish uchun interface lar tayyor
+- Multi-language support uchun tayyor struktura
+
+✅ PERFORMANCE:
+- Async/await to'liq qo'llanilgan
+- Pagination support
+- Efficient query patterns
+
+================================================================================
+🎯 FOYDALANISH TARTIBI
+================================================================================
+
+1. Repository larni implement qilish kerak (Infrastructure layer da)
+2. Service larni implement qilish kerak (Email, File Storage)
+3. Entity Framework DbContext sozlash kerak
+4. Dependency Injection sozlash kerak
+5. Controller lar yaratish kerak (API endpoints uchun)
+
+Barcha mediator handler lar tayyor va to'liq ishlaydi!
+================================================================================
