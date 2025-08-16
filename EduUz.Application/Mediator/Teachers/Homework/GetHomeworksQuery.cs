@@ -2,6 +2,9 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
+using EduUz.Application.Repositories;
+using EduUz.Core.Entities;
 
 namespace EduUz.Application.Mediator.Teachers.Homework
 {
@@ -39,18 +42,18 @@ namespace EduUz.Application.Mediator.Teachers.Homework
                 Title = h.Title,
                 Description = h.Description,
                 ClassId = h.ClassId,
-                ClassName = h.Class.Name,
+                ClassName = h.Class?.Name ?? "Unknown",
                 SubjectId = h.SubjectId,
-                SubjectName = h.Subject.Name,
+                SubjectName = h.Subject?.Name ?? "Unknown",
                 DueDate = h.DueDate,
                 CreatedAt = h.CreatedAt,
-                Materials = h.Materials.Select(m => new HomeworkMaterialDto
+                Materials = h.Materials?.Select(m => new HomeworkMaterialDto
                 {
                     Id = m.Id,
                     FileName = m.FileName,
                     FileUrl = m.FileUrl,
                     FileType = m.FileType
-                }).ToList()
+                }).ToList() ?? new List<HomeworkMaterialDto>()
             }).ToList();
         }
     }

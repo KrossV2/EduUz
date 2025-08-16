@@ -2,6 +2,10 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
+using EduUz.Application.Repositories;
+using EduUz.Core.Entities;
+using EduUz.Application.Services;
 
 namespace EduUz.Application.Mediator.Teachers.Attendance
 {
@@ -87,7 +91,7 @@ namespace EduUz.Application.Mediator.Teachers.Attendance
                 var consecutiveAbsences = await _attendanceRepository.GetConsecutiveAbsencesAsync(studentId);
                 if (consecutiveAbsences >= 3) // Notify after 3 consecutive absences
                 {
-                    var parents = await _parentRepository.GetParentsByStudentIdAsync(studentId);
+                    var parents = await _parentRepository.GetByStudentIdAsync(studentId);
                     var student = await _studentRepository.GetByIdAsync(studentId);
 
                     foreach (var parent in parents)

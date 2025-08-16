@@ -1,6 +1,8 @@
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using EduUz.Application.Repositories;
+using EduUz.Core.Entities;
 
 namespace EduUz.Application.Mediator.Parents
 {
@@ -78,12 +80,5 @@ namespace EduUz.Application.Mediator.Parents
 
             return true;
         }
-    }
-
-    public enum ExcuseStatus
-    {
-        Pending = 1,
-        Approved = 2,
-        Rejected = 3
     }
 }

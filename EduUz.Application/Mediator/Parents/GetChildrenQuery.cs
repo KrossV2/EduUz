@@ -2,6 +2,9 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
+using EduUz.Application.Repositories;
+using EduUz.Core.Entities;
 
 namespace EduUz.Application.Mediator.Parents
 {
@@ -33,14 +36,14 @@ namespace EduUz.Application.Mediator.Parents
             return children.Select(c => new ChildDto
             {
                 Id = c.StudentId,
-                FirstName = c.Student.FirstName,
-                LastName = c.Student.LastName,
-                FullName = c.Student.FullName,
-                ClassId = c.Student.ClassId,
-                ClassName = c.Student.Class.Name,
-                SchoolName = c.Student.Class.School.Name,
-                BirthDate = c.Student.BirthDate,
-                PhoneNumber = c.Student.PhoneNumber
+                FirstName = c.Student?.FirstName ?? "Unknown",
+                LastName = c.Student?.LastName ?? "Unknown",
+                FullName = c.Student?.FullName ?? "Unknown",
+                ClassId = c.Student?.ClassId ?? 0,
+                ClassName = c.Student?.Class?.Name ?? "Unknown",
+                SchoolName = c.Student?.Class?.School?.Name ?? "Unknown",
+                BirthDate = c.Student?.BirthDate ?? DateTime.MinValue,
+                PhoneNumber = c.Student?.PhoneNumber ?? "Unknown"
             }).ToList();
         }
     }

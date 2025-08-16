@@ -2,6 +2,9 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
+using EduUz.Application.Repositories;
+using EduUz.Core.Entities;
 
 namespace EduUz.Application.Mediator.Common.Notifications
 {

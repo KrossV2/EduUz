@@ -2,6 +2,9 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
+using EduUz.Application.Repositories;
+using EduUz.Core.Entities;
 
 namespace EduUz.Application.Mediator.Teachers.Attendance
 {
@@ -42,7 +45,7 @@ namespace EduUz.Application.Mediator.Teachers.Attendance
             {
                 Id = a.Id,
                 StudentId = a.StudentId,
-                StudentName = a.Student.FullName,
+                StudentName = a.Student?.FullName ?? "Unknown",
                 ClassId = a.ClassId,
                 Date = a.Date,
                 Status = a.Status,

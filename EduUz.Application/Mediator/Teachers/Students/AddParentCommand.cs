@@ -1,6 +1,8 @@
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using EduUz.Application.Repositories;
+using EduUz.Core.Entities;
 
 namespace EduUz.Application.Mediator.Teachers.Students
 {

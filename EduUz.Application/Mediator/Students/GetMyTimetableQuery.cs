@@ -2,6 +2,9 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
+using EduUz.Application.Repositories;
+using EduUz.Core.Entities;
 
 namespace EduUz.Application.Mediator.Students
 {
@@ -36,9 +39,9 @@ namespace EduUz.Application.Mediator.Students
                 DayOfWeek = t.DayOfWeek,
                 LessonNumber = t.LessonNumber,
                 SubjectId = t.SubjectId,
-                SubjectName = t.Subject.Name,
+                SubjectName = t.Subject?.Name ?? "Unknown",
                 TeacherId = t.TeacherId,
-                TeacherName = t.Teacher.FullName,
+                TeacherName = t.Teacher?.FullName ?? "Unknown",
                 StartTime = t.StartTime,
                 EndTime = t.EndTime
             }).ToList();

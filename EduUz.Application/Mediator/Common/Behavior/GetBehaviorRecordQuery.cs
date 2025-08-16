@@ -1,6 +1,8 @@
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using EduUz.Application.Repositories;
+using EduUz.Core.Entities;
 
 namespace EduUz.Application.Mediator.Common.Behavior
 {
@@ -64,9 +66,9 @@ namespace EduUz.Application.Mediator.Common.Behavior
             {
                 Id = record.Id,
                 StudentId = record.StudentId,
-                StudentName = record.Student.FullName,
+                StudentName = record.Student?.FullName ?? "Unknown",
                 TeacherId = record.TeacherId,
-                TeacherName = record.Teacher.FullName,
+                TeacherName = record.Teacher?.FullName ?? "Unknown",
                 Type = record.Type,
                 Points = record.Points,
                 Description = record.Description,

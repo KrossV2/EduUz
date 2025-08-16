@@ -2,6 +2,9 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
+using EduUz.Application.Repositories;
+using EduUz.Core.Entities;
 
 namespace EduUz.Application.Mediator.Students
 {
@@ -39,7 +42,7 @@ namespace EduUz.Application.Mediator.Students
                 Date = a.Date,
                 Status = a.Status,
                 Comment = a.Comment,
-                ClassName = a.Class.Name
+                ClassName = a.Class?.Name ?? "Unknown"
             }).ToList();
         }
     }

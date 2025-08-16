@@ -2,6 +2,9 @@ using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
+using EduUz.Application.Repositories;
+using EduUz.Core.Entities;
 
 namespace EduUz.Application.Mediator.Teachers.Grades
 {
@@ -38,9 +41,9 @@ namespace EduUz.Application.Mediator.Teachers.Grades
             {
                 Id = g.Id,
                 StudentId = g.StudentId,
-                StudentName = g.Student.FullName,
+                StudentName = g.Student?.FullName ?? "Unknown",
                 SubjectId = g.SubjectId,
-                SubjectName = g.Subject.Name,
+                SubjectName = g.Subject?.Name ?? "Unknown",
                 GradeType = g.GradeType,
                 Value = g.Value,
                 Date = g.Date,
