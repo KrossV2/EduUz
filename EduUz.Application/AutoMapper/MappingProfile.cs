@@ -40,7 +40,10 @@ public class MappingProfile : Profile
 
         // Teacher Mappings
         CreateMap<Teacher, TeacherDto>();
-        CreateMap<TeacherCreateDto, Teacher>();
+        CreateMap<TeacherCreateDto, Teacher>()
+    .ForMember(dest => dest.TeacherSubjects, opt => opt.MapFrom(src =>
+        src.SubjectIds.Select(id => new TeacherSubject { SubjectId = id }).ToList()
+    ));
         CreateMap<TeacherUpdateDto, Teacher>();
 
         // Subject Mappings
