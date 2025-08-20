@@ -1,6 +1,6 @@
-using EduUz.Application.Mediator.Statistics.GetClassStatistics;
-using EduUz.Application.Mediator.Statistics.GetTeacherStatistics;
-using EduUz.Application.Mediator.Statistics.GetAttendanceStatistics;
+using EduUz.Application.Mediatr.Statistics.GetClassStatistics;
+using EduUz.Application.Mediatr.Statistics.GetTeacherStatistics;
+using EduUz.Application.Mediatr.Statistics.GetAttendanceStatistics;
 using EduUz.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
