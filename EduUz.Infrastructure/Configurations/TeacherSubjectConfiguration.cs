@@ -12,7 +12,7 @@ public class TeacherSubjectConfiguration : IEntityTypeConfiguration<TeacherSubje
         builder.HasKey(ts => ts.Id);
 
         builder.HasOne(ts => ts.Teacher)
-            .WithMany(t => t.Subjects)
+            .WithMany(t => t.TeacherSubjects)
             .HasForeignKey(ts => ts.TeacherId);
 
         builder.HasOne(ts => ts.Subject)
