@@ -11,7 +11,7 @@ namespace EduUz.Web.Controllers;
 
 [ApiController]
 [Route("api/parent")]
-public class ParentController(IMediator mediator) : ControllerBase
+public class ParentsController(IMediator mediator) : ControllerBase
 {
     [HttpGet("children/{childId:int}/attendances")]
     public async Task<ActionResult<List<AttendanceDto>>> GetChildAttendances([FromRoute] int childId)

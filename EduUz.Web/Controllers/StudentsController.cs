@@ -14,7 +14,7 @@ namespace EduUz.Web.Controllers;
 
 [ApiController]
 [Route("api/student")]
-public class StudentController(IMediator mediator) : ControllerBase
+public class StudentsController(IMediator mediator) : ControllerBase
 {
     [HttpGet("attendances")]
     public async Task<ActionResult<IEnumerable<Attendance>>> GetAllAttendances()

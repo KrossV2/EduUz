@@ -29,9 +29,8 @@ namespace EduUz.Web.Controllers;
 
 [ApiController]
 [Route("api/director")]
-public class DirectorController(IMediator mediator) : ControllerBase
+public class DirectorsController(IMediator mediator) : ControllerBase
 {
-    // Classes
     [HttpGet("classes")]
     public async Task<ActionResult<IEnumerable<Class>>> GetAllClasses()
     {
@@ -190,4 +189,3 @@ public class DirectorController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 }
-

@@ -26,9 +26,8 @@ namespace EduUz.Web.Controllers;
 
 [ApiController]
 [Route("api/teacher")]
-public class TeacherController(IMediator mediator) : ControllerBase
+public class TeachersController(IMediator mediator) : ControllerBase
 {
-    // Homeworks
     [HttpGet("homeworks")]
     public async Task<ActionResult<List<HomeworkResponseDto>>> GetAllHomeworks()
     {
@@ -166,4 +165,3 @@ public class TeacherController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 }
-

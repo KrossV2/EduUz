@@ -26,9 +26,8 @@ namespace EduUz.Web.Controllers;
 
 [ApiController]
 [Route("api/admin")]
-public class AdminController(IMediator mediator) : ControllerBase
+public class AdminsController(IMediator mediator) : ControllerBase
 {
-    // Regions
     [HttpGet("regions")]
     public async Task<ActionResult<IEnumerable<Region>>> GetAllRegions()
     {
@@ -36,7 +35,6 @@ public class AdminController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
-    // Cities
     [HttpPost("cities")]
     public async Task<ActionResult<CityResponseDto>> CreateCity([FromBody] CityCreateDto dto)
     {
@@ -58,7 +56,6 @@ public class AdminController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
-    // Subjects
     [HttpGet("subjects")]
     public async Task<ActionResult<IEnumerable<Subject>>> GetAllSubjects()
     {
@@ -87,7 +84,6 @@ public class AdminController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
-    // Schools
     [HttpGet("schools")]
     public async Task<ActionResult<IEnumerable<School>>> GetAllSchools()
     {
@@ -116,7 +112,6 @@ public class AdminController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
-    // Users
     [HttpGet("users")]
     public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
     {
