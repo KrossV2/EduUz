@@ -170,6 +170,31 @@ namespace EduUz.Infrastructure.Migrations
                     b.ToTable("Directors", (string)null);
                 });
 
+            modelBuilder.Entity("EduUz.Core.Models.Excuse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Excuses");
+                });
+
             modelBuilder.Entity("EduUz.Core.Models.Grade", b =>
                 {
                     b.Property<int>("Id")
@@ -217,6 +242,38 @@ namespace EduUz.Infrastructure.Migrations
                     b.ToTable("Grades", (string)null);
                 });
 
+            modelBuilder.Entity("EduUz.Core.Models.GradeChangeRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("GradeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("NewValue")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GradeId");
+
+                    b.ToTable("GradeChangeRequests");
+                });
+
             modelBuilder.Entity("EduUz.Core.Models.Homework", b =>
                 {
                     b.Property<int>("Id")
@@ -251,6 +308,45 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasIndex("TeacherSubjectId");
 
                     b.ToTable("Homeworks", (string)null);
+                });
+
+            modelBuilder.Entity("EduUz.Core.Models.HomeworkSubmission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FileUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("GradeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("HomeworkId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("SubmittedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GradeId");
+
+                    b.HasIndex("HomeworkId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("HomeworkSubmissions");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.LessonSchedule", b =>
@@ -547,7 +643,7 @@ namespace EduUz.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClassId")
+                    b.Property<int?>("ClassId")
                         .HasColumnType("integer");
 
                     b.Property<int>("UserId")
@@ -816,7 +912,7 @@ namespace EduUz.Infrastructure.Migrations
             modelBuilder.Entity("EduUz.Core.Models.Attendance", b =>
                 {
                     b.HasOne("EduUz.Core.Models.Student", "Student")
-                        .WithMany("Attendances")
+                        .WithMany("AttendanceRecords")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -903,6 +999,17 @@ namespace EduUz.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("EduUz.Core.Models.Excuse", b =>
+                {
+                    b.HasOne("EduUz.Core.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("EduUz.Core.Models.Grade", b =>
                 {
                     b.HasOne("EduUz.Core.Models.Grade", "OriginalGrade")
@@ -929,6 +1036,17 @@ namespace EduUz.Infrastructure.Migrations
                     b.Navigation("TeacherSubject");
                 });
 
+            modelBuilder.Entity("EduUz.Core.Models.GradeChangeRequest", b =>
+                {
+                    b.HasOne("EduUz.Core.Models.Grade", "Grade")
+                        .WithMany()
+                        .HasForeignKey("GradeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Grade");
+                });
+
             modelBuilder.Entity("EduUz.Core.Models.Homework", b =>
                 {
                     b.HasOne("EduUz.Core.Models.Class", "Class")
@@ -946,6 +1064,31 @@ namespace EduUz.Infrastructure.Migrations
                     b.Navigation("Class");
 
                     b.Navigation("TeacherSubject");
+                });
+
+            modelBuilder.Entity("EduUz.Core.Models.HomeworkSubmission", b =>
+                {
+                    b.HasOne("EduUz.Core.Models.Grade", "Grade")
+                        .WithMany()
+                        .HasForeignKey("GradeId");
+
+                    b.HasOne("EduUz.Core.Models.Homework", "Homework")
+                        .WithMany()
+                        .HasForeignKey("HomeworkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EduUz.Core.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Grade");
+
+                    b.Navigation("Homework");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.LessonSchedule", b =>
@@ -1027,9 +1170,7 @@ namespace EduUz.Infrastructure.Migrations
                 {
                     b.HasOne("EduUz.Core.Models.Class", "Class")
                         .WithMany("Students")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClassId");
 
                     b.HasOne("EduUz.Core.Models.User", "User")
                         .WithOne()
@@ -1070,7 +1211,7 @@ namespace EduUz.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("EduUz.Core.Models.Teacher", "Teacher")
-                        .WithMany("Subjects")
+                        .WithMany("TeacherSubjects")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1145,7 +1286,7 @@ namespace EduUz.Infrastructure.Migrations
 
             modelBuilder.Entity("EduUz.Core.Models.Student", b =>
                 {
-                    b.Navigation("Attendances");
+                    b.Navigation("AttendanceRecords");
 
                     b.Navigation("BehaviorRecords");
 
@@ -1163,7 +1304,7 @@ namespace EduUz.Infrastructure.Migrations
                 {
                     b.Navigation("HomeroomClasses");
 
-                    b.Navigation("Subjects");
+                    b.Navigation("TeacherSubjects");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Timetable", b =>

@@ -22,16 +22,16 @@ public class GetAttendanceReportsQueryHandler : IRequestHandler<GetAttendanceRep
     {
         var stats = await _context.Classes
             .Include(c => c.Students)
-                .ThenInclude(s => s.Attendances)
+                .ThenInclude(s => s.AttendanceRecords)
             .Select(c => new AttendanceStatisticsDto
             {
                 ClassName = c.Name,
-                PresentCount = c.Students.SelectMany(s => s.Attendances).Count(a => a.Status == AttendanceStatus.Present),
-                AbsentCount = c.Students.SelectMany(s => s.Attendances).Count(a => a.Status == AttendanceStatus.Absent),
-                LateCount = c.Students.SelectMany(s => s.Attendances).Count(a => a.Status == AttendanceStatus.Late),
-                AttendanceRate = c.Students.SelectMany(s => s.Attendances).Any()
-                    ? (double)c.Students.SelectMany(s => s.Attendances).Count(a => a.Status == AttendanceStatus.Present)
-                      / c.Students.SelectMany(s => s.Attendances).Count() * 100
+                PresentCount = c.Students.SelectMany(s => s.AttendanceRecords).Count(a => a.Status == AttendanceStatus.Present),
+                AbsentCount = c.Students.SelectMany(s => s.AttendanceRecords).Count(a => a.Status == AttendanceStatus.Absent),
+                LateCount = c.Students.SelectMany(s => s.AttendanceRecords).Count(a => a.Status == AttendanceStatus.Late),
+                AttendanceRate = c.Students.SelectMany(s => s.AttendanceRecords).Any()
+                    ? (double)c.Students.SelectMany(s => s.AttendanceRecords).Count(a => a.Status == AttendanceStatus.Present)
+                      / c.Students.SelectMany(s => s.AttendanceRecords).Count() * 100
                     : 0
             })
             .ToListAsync(cancellationToken);

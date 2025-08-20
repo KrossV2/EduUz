@@ -20,7 +20,7 @@ public class AttendanceConfiguration : IEntityTypeConfiguration<Attendance>
             .HasForeignKey(a => a.TimetableId);
 
         builder.HasOne(a => a.Student)
-            .WithMany(s => s.Attendances)
+            .WithMany(s => s.AttendanceRecords)
             .HasForeignKey(a => a.StudentId);
 
         builder.HasIndex(a => new { a.TimetableId, a.StudentId }).IsUnique();
