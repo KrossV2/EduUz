@@ -35,6 +35,8 @@ public class EduUzDbContext : DbContext
     public DbSet<Timetable> Timetables { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<GradeChangeRequest> GradeChangeRequests { get; set; }
+    public DbSet<HomeworkSubmission> HomeworkSubmissions { get; set; }
+    public DbSet<Excuse> Excuses { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

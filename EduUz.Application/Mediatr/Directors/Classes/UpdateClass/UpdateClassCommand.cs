@@ -3,7 +3,7 @@ using EduUz.Application.Repositories.Interfaces;
 using EduUz.Core.Dtos;
 using MediatR;
 
-namespace EduUz.Application.Mediatr.Director.Classes.UpdateClass;
+namespace EduUz.Application.Mediatr.Directors.Classes.UpdateClass;
 
 public class UpdateClassCommand(ClassUpdateDto dto , int id) : IRequest<ClassResponseDto>
 {

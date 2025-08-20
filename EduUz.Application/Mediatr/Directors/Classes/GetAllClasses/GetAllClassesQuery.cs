@@ -2,7 +2,7 @@
 using EduUz.Core.Models;
 using MediatR;
 
-namespace EduUz.Application.Mediatr.Director.Classes.GetAllClasses;
+namespace EduUz.Application.Mediatr.Directors.Classes.GetAllClasses;
 
 public class GetAllClassesQuery : IRequest<IEnumerable<Class>>
 {

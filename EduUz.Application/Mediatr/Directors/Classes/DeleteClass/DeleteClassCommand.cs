@@ -3,7 +3,7 @@ using EduUz.Infrastructure.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace EduUz.Application.Mediatr.Director.Classes.DeleteClass;
+namespace EduUz.Application.Mediatr.Directors.Classes.DeleteClass;
 
 public class DeleteClassCommand(int id ) : IRequest
 {

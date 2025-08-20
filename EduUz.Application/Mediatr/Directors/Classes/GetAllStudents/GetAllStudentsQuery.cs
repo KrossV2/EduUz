@@ -3,7 +3,7 @@ using EduUz.Infrastructure.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace EduUz.Application.Mediatr.Director.Classes.GetAllStudents;
+namespace EduUz.Application.Mediatr.Directors.Classes.GetAllStudents;
 
 public class GetAllStudentsQuery(int id) : IRequest<IEnumerable<Student>>
 {

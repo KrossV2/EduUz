@@ -4,7 +4,7 @@ using EduUz.Core.Dtos;
 using EduUz.Core.Models;
 using MediatR;
 
-namespace EduUz.Application.Mediatr.Director.Teachers.CreateTeacher;
+namespace EduUz.Application.Mediatr.Directors.Teachers.CreateTeacher;
 
 public class CreateTeacherCommand(TeacherCreateDto dto) : IRequest<TeacherResponseDto>
 {

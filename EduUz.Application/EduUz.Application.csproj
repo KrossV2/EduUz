@@ -33,8 +33,6 @@
     <Folder Include="Mediatr\Common\BehaviorRecords\" />
     <Folder Include="Mediatr\Common\SystemInfo\" />
     <Folder Include="Mediatr\Common\Notifications\" />
-    <Folder Include="Mediatr\Parent\" />
-    <Folder Include="Mediatr\Student\" />
   </ItemGroup>
 
 </Project>

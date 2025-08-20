@@ -4,7 +4,7 @@ using EduUz.Core.Dtos;
 using EduUz.Core.Models;
 using MediatR;
 
-namespace EduUz.Application.Mediator.Sutudents.CreateStudent;
+namespace EduUz.Application.Mediatr.Sutudents.CreateStudent;
 
 public class CreateStudentCommand (StudentCreateDto dto) : IRequest<StudentResponseDto>
 {
