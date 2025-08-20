@@ -1,4 +1,9 @@
-﻿namespace EduUz.Application.Mediatr.Teacher.Homeworks.GetAllHomeworks;
+﻿using AutoMapper;
+using EduUz.Application.Repositories.Interfaces;
+using EduUz.Core.Dtos;
+using MediatR;
+
+namespace EduUz.Application.Mediatr.Teacher.Homeworks.GetAllHomeworks;
 
 
 public record GetAllHomeworksQuery() : IRequest<List<HomeworkResponseDto>>;
@@ -8,7 +13,7 @@ public class GetAllHomeworksQueryHandler(IHomeworkRepository repo, IMapper mappe
 {
     public async Task<List<HomeworkResponseDto>> Handle(GetAllHomeworksQuery request, CancellationToken cancellationToken)
     {
-        var homeworks = await repo.GetAllAsync();
+        var homeworks = repo.GetAll();
 
         return mapper.Map<List<HomeworkResponseDto>>(homeworks);
     }
