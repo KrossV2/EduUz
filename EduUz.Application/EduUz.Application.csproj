@@ -33,12 +33,8 @@
     <Folder Include="Mediatr\Common\BehaviorRecords\" />
     <Folder Include="Mediatr\Common\SystemInfo\" />
     <Folder Include="Mediatr\Common\Notifications\" />
-    <Folder Include="Mediatr\Directors\RequestGrades\" />
     <Folder Include="Mediatr\Parent\" />
     <Folder Include="Mediatr\Student\" />
-    <Folder Include="Mediatr\Teacher\Grades\" />
-    <Folder Include="Mediatr\Teacher\Attendances\" />
-    <Folder Include="Mediatr\Teacher\Homeworks\" />
     <Folder Include="Mediatr\Teacher\Tyutor\" />
   </ItemGroup>
 
