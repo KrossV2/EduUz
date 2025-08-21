@@ -21,6 +21,7 @@ using EduUz.Core.Dtos;
 using EduUz.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using EduUz.Application.Mediatr.Admin.Directors.GetAllDirectors;
 
 namespace EduUz.Web.Controllers;
 
@@ -151,6 +152,13 @@ public class AdminsController(IMediator mediator) : ControllerBase
     public async Task<ActionResult<int>> CreateDirector([FromBody] DirectorCreateDto dto)
     {
         var result = await mediator.Send(new CreateDirectorCommand(dto));
+        return Ok(result);
+    }
+
+    [HttpGet("directors")]
+    public async Task<IActionResult> GetAllDirectors()
+    {
+        var result = await mediator.Send(new GetAllDirectorsQuery());
         return Ok(result);
     }
 
