@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <Folder Include="Mediatr\Admin\History\" />
-    <Folder Include="Mediatr\Auth\" />
     <Folder Include="Mediatr\Common\Files\" />
     <Folder Include="Mediatr\Common\BehaviorRecords\" />
     <Folder Include="Mediatr\Common\SystemInfo\" />

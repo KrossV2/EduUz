@@ -1,5 +1,7 @@
 using EduUz.Application.DiContainer;
+using EduUz.Application.Settings;
 using EduUz.Infrastructure.DiContainer;
+using Microsoft.OpenApi.Models;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,13 +18,63 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddRepositories()
     .AddDatabase(configurations);
 
+// Jwt
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "EuUz",
+        Version = "v1",
+        Description = "EduUz",
+        Contact = new OpenApiContact
+        {
+            Name = "Your Name",
+            Email = "nasriddinovadildora45@gmail.com"
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Your License Name",
+            Url = new Uri("https://example.com/license") 
+        }
+    });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Example: 'Bearer {your token}'",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2", 
+                            Name = "Bearer",
+                            In = ParameterLocation.Header
+                        },
+                        new List<string>() 
+                    }
+            });
+});
+
+
 // Serilog
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
     .CreateLogger();
 
-var app = builder.Build();
+var app = builder.Build(); 
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

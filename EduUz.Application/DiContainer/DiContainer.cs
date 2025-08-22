@@ -4,6 +4,7 @@ using EduUz.Application.Repositories.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using System.Reflection;
+using EduUz.Application.Helpers;
 
 namespace EduUz.Application.DiContainer;
 
@@ -31,6 +32,7 @@ public static class DiContainer
         services.AddScoped<IParentStudentRepository, ParentStudentRepository>();
         services.AddScoped<IDirectorRepository, DirectorRepository>();
         services.AddScoped<IStatisticsRepository, StatisticsRepository>();
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 
         services.AddAutoMapper(typeof(MappingProfile));
