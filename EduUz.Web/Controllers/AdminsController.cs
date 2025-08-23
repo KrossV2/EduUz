@@ -22,12 +22,15 @@ using EduUz.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using EduUz.Application.Mediatr.Admin.Directors.GetAllDirectors;
+using EduUz.Application.Mediatr.Auth.SignIn;
+using EduUz.Application.Mediatr.Auth.SignUp;
+using EduUz.Infrastructure.Database;
 
 namespace EduUz.Web.Controllers;
 
 [ApiController]
 [Route("api/admin")]
-public class AdminsController(IMediator mediator) : ControllerBase
+public class AdminsController(IMediator mediator  ,  EduUzDbContext context) : ControllerBase
 {
     [HttpGet("regions")]
     public async Task<ActionResult<IEnumerable<Region>>> GetAllRegions()
@@ -167,5 +170,29 @@ public class AdminsController(IMediator mediator) : ControllerBase
     {
         var result = await mediator.Send(new UserSearchQuery(searchTerm, roleId, schoolId));
         return Ok(result);
+    }
+
+    [HttpPost("signin")]
+    public async Task<ActionResult<SignInResponseDto>> SignIn([FromBody] SignInRequestDto request)
+    {
+        var result = await mediator.Send(new SignInCommand(request));
+        return Ok(result);
+    }
+
+    [HttpPost("signup")]
+    public async Task<ActionResult<UserResponseDto>> SignUp([FromBody] UserCreateDto request)
+    {
+        using var transaction = await context.Database.BeginTransactionAsync();
+
+        try
+        {
+            var result = await mediator.Send(new SignUpCommand(request));
+        return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync();
+            return BadRequest(new { message = "Something Went Wrong! : " + ex.Message });
+        }
     }
 }

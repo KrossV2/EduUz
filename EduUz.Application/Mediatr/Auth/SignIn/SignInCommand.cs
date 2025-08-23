@@ -25,8 +25,9 @@ public class SignInCommandHandler(
         var request = command.Request;
 
         var user = await context.Users
-    .Include(u => u.Role)
-        .FirstOrDefaultAsync(u => u.Username == command.Request.EmailOrUsername);
+            .FirstOrDefaultAsync(u => u.Email == request.EmailOrUsername
+                                   || u.Username == request.EmailOrUsername);
+
 
         if (user is null)
         {
@@ -39,7 +40,7 @@ public class SignInCommandHandler(
             throw new UnauthorizedAccessException("Invalid username or password.");
         }
 
-        var token = authService.GetToken(request.EmailOrUsername);
+        var token = authService.GetToken(user);
 
 
         return new SignInResponseDto()

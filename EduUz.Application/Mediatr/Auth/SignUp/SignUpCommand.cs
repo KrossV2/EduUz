@@ -16,7 +16,18 @@ public class SignUpCommandHandler(IUserRepository userRepository, IPasswordHashe
 {
     public async Task<UserResponseDto> Handle(SignUpCommand command, CancellationToken cancellationToken)
     {
-        var  user = mappper.Map<User>(command.Request);
+        var request  = command.Request;
+
+        var user = new User()
+        {
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            Email = request.Email,
+            Username = request.Username,
+            PasswordHash = passwordHasher.HashPassword(request.Password),
+            RoleId = request.RoleId,
+            SchoolId = request.SchoolId > 0 ? request.SchoolId : null
+        };
 
         await userRepository.AddAsync(user);
         await userRepository.SaveChangesAsync();
@@ -31,6 +42,7 @@ public class SignUpCommandHandler(IUserRepository userRepository, IPasswordHashe
             FirstName: user.FirstName,
             LastName: user.LastName,
             Email: user.Email,
+            
             Username: user.Username,
             RoleName: role?.Name ?? "Unknown",
             SchoolName: school?.Name ?? "Not Assigned"

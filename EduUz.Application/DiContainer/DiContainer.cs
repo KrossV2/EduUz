@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using System.Reflection;
 using EduUz.Application.Helpers;
+using EduUz.Application.Services;
 
 namespace EduUz.Application.DiContainer;
 
@@ -33,6 +34,7 @@ public static class DiContainer
         services.AddScoped<IDirectorRepository, DirectorRepository>();
         services.AddScoped<IStatisticsRepository, StatisticsRepository>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
+        services.AddScoped<IAuthService, AuthService>();
 
 
         services.AddAutoMapper(typeof(MappingProfile));
