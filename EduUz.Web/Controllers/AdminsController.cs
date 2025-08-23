@@ -175,8 +175,24 @@ public class AdminsController(IMediator mediator  ,  EduUzDbContext context) : C
     [HttpPost("signin")]
     public async Task<ActionResult<SignInResponseDto>> SignIn([FromBody] SignInRequestDto request)
     {
-        var result = await mediator.Send(new SignInCommand(request));
-        return Ok(result);
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(new { message = "Invalid request data", errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage) });
+        }
+
+        try
+        {
+            var result = await mediator.Send(new SignInCommand(request));
+            return Ok(result);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "Internal server error occurred during sign in." });
+        }
     }
 
     [HttpPost("signup")]

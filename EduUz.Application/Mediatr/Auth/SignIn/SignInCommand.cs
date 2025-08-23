@@ -1,4 +1,4 @@
-﻿using EduUz.Application.Helpers;
+using EduUz.Application.Helpers;
 using EduUz.Application.Repositories.Interfaces;
 using EduUz.Application.Services;
 using EduUz.Core.Dtos;
@@ -24,28 +24,53 @@ public class SignInCommandHandler(
     {
         var request = command.Request;
 
-        var user = await context.Users
-            .FirstOrDefaultAsync(u => u.Email == request.EmailOrUsername
-                                   || u.Username == request.EmailOrUsername);
-
-
-        if (user is null)
+        try
         {
-            throw new UnauthorizedAccessException("Invalid email or password.");
+            // Validate input
+            if (string.IsNullOrWhiteSpace(request.EmailOrUsername) || string.IsNullOrWhiteSpace(request.Password))
+            {
+                throw new UnauthorizedAccessException("Email/username and password are required.");
+            }
+
+            var user = await context.Users
+                .Include(u => u.Role)
+                .Include(u => u.School)
+                .FirstOrDefaultAsync(u => u.Email == request.EmailOrUsername
+                                       || u.Username == request.EmailOrUsername, cancellationToken);
+
+            if (user is null)
+            {
+                throw new UnauthorizedAccessException("Invalid email or password.");
+            }
+
+            if (string.IsNullOrEmpty(user.PasswordHash))
+            {
+                throw new UnauthorizedAccessException("Invalid email or password.");
+            }
+
+            var isValidPassword = passwordHasher.VerifyHash(request.Password, user.PasswordHash);
+            if (!isValidPassword)
+            {
+                throw new UnauthorizedAccessException("Invalid email or password.");
+            }
+
+            var token = authService.GetToken(user);
+
+            return new SignInResponseDto()
+            {
+                AccessToken = token,
+                RefreshToken = string.Empty, // You can implement refresh token logic here
+                ExpiresIn = 86400 // 24 hours in seconds
+            };
         }
-
-        var isValidPassword = passwordHasher.VerifyHash(request.Password, user.PasswordHash);
-        if (!isValidPassword)
+        catch (UnauthorizedAccessException)
         {
-            throw new UnauthorizedAccessException("Invalid username or password.");
+            throw; // Re-throw authorization exceptions
         }
-
-        var token = authService.GetToken(user);
-
-
-        return new SignInResponseDto()
+        catch (Exception ex)
         {
-            AccessToken = token,
-        };
+            // Log the exception here if you have logging configured
+            throw new Exception("An error occurred during sign in process.", ex);
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using EduUz.Application.Settings;
+using EduUz.Application.Settings;
 using EduUz.Core.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -35,8 +35,9 @@ new Claim("school_name", user.School?.Name ?? string.Empty),
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            "cafe.uz",
-            "cafe.uz",
+            issuer: _settings.Value.Issuers?.FirstOrDefault() ?? "EduUz",
+            audience: _settings.Value.Audiences?.FirstOrDefault() ?? "EduUz",
+            claims: claims,
             expires: DateTime.UtcNow.Add(TimeSpan.FromDays(1)),
             signingCredentials: credentials
         );
