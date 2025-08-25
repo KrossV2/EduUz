@@ -1,4 +1,4 @@
-﻿
+
 using EduUz.Core.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
@@ -15,8 +15,9 @@ public class TeacherConfiguration : IEntityTypeConfiguration<Teacher>
         builder.Property(t => t.IsHomeroomTeacher)
             .HasDefaultValue(false);
 
-        builder.HasOne(t => t.User)
-            .WithOne()
-            .HasForeignKey<Teacher>(t => t.UserId);
+        // User relationship is configured in UserConfiguration
+        // builder.HasOne(t => t.User)
+        //     .WithOne(u => u.Teacher)
+        //     .HasForeignKey<Teacher>(t => t.UserId);
     }
 }

@@ -1,4 +1,4 @@
-﻿
+
 using EduUz.Core.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +12,10 @@ public class DirectorConfiguration : IEntityTypeConfiguration<Director>
         builder.ToTable("Directors");
         builder.HasKey(d => d.Id);
 
-        builder.HasOne(d => d.User)
-            .WithOne()
-            .HasForeignKey<Director>(d => d.UserId);
+        // User relationship is configured in UserConfiguration
+        // builder.HasOne(d => d.User)
+        //     .WithOne(u => u.Director)
+        //     .HasForeignKey<Director>(d => d.UserId);
 
         builder.HasOne(d => d.School)
             .WithOne()

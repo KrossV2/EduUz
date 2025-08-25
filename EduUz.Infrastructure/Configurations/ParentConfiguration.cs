@@ -1,4 +1,4 @@
-﻿
+
 using EduUz.Core.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
@@ -12,8 +12,9 @@ public class ParentConfiguration : IEntityTypeConfiguration<Parent>
         builder.ToTable("Parents");
         builder.HasKey(p => p.Id);
 
-        builder.HasOne(p => p.User)
-            .WithOne()
-            .HasForeignKey<Parent>(p => p.UserId);
+        // User relationship is configured in UserConfiguration
+        // builder.HasOne(p => p.User)
+        //     .WithOne(u => u.Parent)
+        //     .HasForeignKey<Parent>(p => p.UserId);
     }
 }
