@@ -187,8 +187,7 @@ public class AdminsController(IMediator mediator  ,  EduUzDbContext context) : C
         try
         {
             var result = await mediator.Send(new SignUpCommand(request));
-            await transaction.CommitAsync();
-            return Ok(result);
+        return Ok(result);
         }
         catch (Exception ex)
         {
