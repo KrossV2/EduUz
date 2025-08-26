@@ -57,7 +57,7 @@ public class AdminsController(IMediator mediator, EduUzDbContext context) : Cont
     public async Task<IActionResult> DeleteCity([FromRoute] int id)
     {
         await mediator.Send(new DeleteCityCommand(id));
-        return NoContent();
+        return Ok("Deleted Successfully!");
     }
 
     [HttpGet("subjects")]
@@ -85,7 +85,7 @@ public class AdminsController(IMediator mediator, EduUzDbContext context) : Cont
     public async Task<IActionResult> DeleteSubject([FromRoute] int id)
     {
         await mediator.Send(new DeleteSubjectCommand(id));
-        return NoContent();
+        return Ok("Deleted Successfully!");
     }
 
     [HttpGet("schools")]

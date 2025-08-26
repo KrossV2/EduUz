@@ -4,10 +4,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace EduUz.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class XOlaaaaaaa : Migration
+    public partial class InitialCommit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -79,7 +81,8 @@ namespace EduUz.Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    CityId = table.Column<int>(type: "integer", nullable: false)
+                    CityId = table.Column<int>(type: "integer", nullable: false),
+                    DirectorId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,7 +92,7 @@ namespace EduUz.Infrastructure.Migrations
                         column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -129,7 +132,7 @@ namespace EduUz.Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    SchoolId = table.Column<int>(type: "integer", nullable: false)
+                    SchoolId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -139,7 +142,7 @@ namespace EduUz.Infrastructure.Migrations
                         column: x => x.SchoolId,
                         principalTable: "Schools",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Directors_Users_UserId",
                         column: x => x.UserId,
@@ -570,6 +573,64 @@ namespace EduUz.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Regions",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Andijon viloyati" },
+                    { 2, "Buxoro viloyati" },
+                    { 3, "Farg'ona viloyati" },
+                    { 4, "Jizzax viloyati" },
+                    { 5, "Xorazm viloyati" },
+                    { 6, "Namangan viloyati" },
+                    { 7, "Navoiy viloyati" },
+                    { 8, "Qashqadaryo viloyati" },
+                    { 9, "Qoraqalpog'iston Respublikasi" },
+                    { 10, "Samarqand viloyati" },
+                    { 11, "Sirdaryo viloyati" },
+                    { 12, "Surxondaryo viloyati" },
+                    { 13, "Toshkent shahri" },
+                    { 14, "Toshkent viloyati" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Description", "Name" },
+                values: new object[,]
+                {
+                    { 1, "System administrator", "Admin" },
+                    { 2, "School director", "Director" },
+                    { 3, "School teacher", "Teacher" },
+                    { 4, "Student", "Student" },
+                    { 5, "Parent of student", "Parent" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Subjects",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Adabiyot" },
+                    { 2, "Algebra" },
+                    { 3, "Biologiya" },
+                    { 4, "Davlat va huquq asoslari" },
+                    { 5, "Fizika" },
+                    { 6, "Geografiya" },
+                    { 7, "Geometriya" },
+                    { 8, "Informatika" },
+                    { 9, "Ingliz tili" },
+                    { 10, "Iqtisod" },
+                    { 11, "Jahon tarixi" },
+                    { 12, "Kimyo" },
+                    { 13, "Ona tili" },
+                    { 14, "Rus tili" },
+                    { 15, "Tarbiya" },
+                    { 16, "Texnologiya" },
+                    { 17, "O'zbekiston tarixi" },
+                    { 18, "Chizmachilik" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Attendances_StudentId",
                 table: "Attendances",
@@ -608,7 +669,8 @@ namespace EduUz.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Directors_SchoolId",
                 table: "Directors",
-                column: "SchoolId");
+                column: "SchoolId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Directors_UserId",

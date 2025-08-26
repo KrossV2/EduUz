@@ -68,16 +68,16 @@ public class EduUzDbContext : DbContext
 
         // 2. School Relationships
         modelBuilder.Entity<School>()
-            .HasOne(s => s.City)
-            .WithMany(c => c.Schools)
-            .HasForeignKey(s => s.CityId)
+            .HasOne(s => s.Director)
+            .WithOne(d => d.School)
+            .HasForeignKey<School>(s => s.DirectorId)
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Director>()
             .HasOne(d => d.School)
-            .WithMany()
-            .HasForeignKey(d => d.SchoolId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .WithOne(s => s.Director)
+            .HasForeignKey<Director>(d => d.SchoolId)
+            .OnDelete(DeleteBehavior.SetNull);
 
         // 3. Class Relationships
         modelBuilder.Entity<Class>()
@@ -335,6 +335,30 @@ public class EduUzDbContext : DbContext
            new Region { Id = 13, Name = "Toshkent shahri" },
            new Region { Id = 14, Name = "Toshkent viloyati" }
        );
+        });
+
+        modelBuilder.Entity<Subject>(builder =>
+        {
+            builder.HasData(
+            new Subject { Id = 1, Name = "Adabiyot" },
+            new Subject { Id = 2, Name = "Algebra" },
+            new Subject { Id = 3, Name = "Biologiya" },
+            new Subject { Id = 4, Name = "Davlat va huquq asoslari" },
+            new Subject { Id = 5, Name = "Fizika" },
+            new Subject { Id = 6, Name = "Geografiya" },
+            new Subject { Id = 7, Name = "Geometriya" },
+            new Subject { Id = 8, Name = "Informatika" },
+            new Subject { Id = 9, Name = "Ingliz tili" },
+            new Subject { Id = 10, Name = "Iqtisod" },
+            new Subject { Id = 11, Name = "Jahon tarixi" },
+            new Subject { Id = 12, Name = "Kimyo" },
+            new Subject { Id = 13, Name = "Ona tili" },
+            new Subject { Id = 14, Name = "Rus tili" },
+            new Subject { Id = 15, Name = "Tarbiya" },
+            new Subject { Id = 16, Name = "Texnologiya" },
+            new Subject { Id = 17, Name = "O'zbekiston tarixi" },
+            new Subject { Id = 18, Name = "Chizmachilik" }
+        );
         });
     }
 }

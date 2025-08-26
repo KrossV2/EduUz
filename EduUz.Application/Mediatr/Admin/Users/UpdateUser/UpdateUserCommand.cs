@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EduUz.Application.Repositories.Interfaces;
 using EduUz.Core.Dtos;
+using EduUz.Infrastructure.Database;
 using MediatR;
 
 namespace EduUz.Application.Mediatr.Users.UpdateUser;
@@ -11,7 +12,7 @@ public class UpdateUserCommand(UserUpdateDto dto  , int id) :  IRequest<UserResp
     public UserUpdateDto UserUpdateDto { get; set; } = dto;
 }
 
-public class UpdateUserCommandHanler(IUserRepository repo, IMapper mapper) : IRequestHandler<UpdateUserCommand, UserResponseDto>
+public class UpdateUserCommandHanler(IUserRepository repo, IMapper mapper , EduUzDbContext context) : IRequestHandler<UpdateUserCommand, UserResponseDto>
 {
     public async Task<UserResponseDto> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
@@ -25,6 +26,20 @@ public class UpdateUserCommandHanler(IUserRepository repo, IMapper mapper) : IRe
         repo.Update(user);
         await repo.SaveChangesAsync();
 
-        return mapper.Map<UserResponseDto>(user);
+        var rolename = await context.Roles.FindAsync(user.RoleId);
+        var school = await context.Schools.FindAsync(user.SchoolId);
+
+        var response = new UserResponseDto
+        {
+            Id = user.Id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email =  user.Email,
+            Username = user.Username,
+            RoleName = rolename.Name,
+            SchoolName = school.Name
+        };
+
+        return response;
     }
 }

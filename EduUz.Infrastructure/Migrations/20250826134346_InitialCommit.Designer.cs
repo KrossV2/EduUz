@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EduUz.Infrastructure.Migrations
 {
     [DbContext(typeof(EduUzDbContext))]
-    [Migration("20250825171915_XOlaaaaaaa")]
-    partial class XOlaaaaaaa
+    [Migration("20250826134346_InitialCommit")]
+    partial class InitialCommit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,7 +144,7 @@ namespace EduUz.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("SchoolId")
+                    b.Property<int?>("SchoolId")
                         .HasColumnType("integer");
 
                     b.Property<int>("UserId")
@@ -152,7 +152,8 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SchoolId");
+                    b.HasIndex("SchoolId")
+                        .IsUnique();
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -455,6 +456,78 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Regions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Andijon viloyati"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Buxoro viloyati"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Farg'ona viloyati"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Jizzax viloyati"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Xorazm viloyati"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Namangan viloyati"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Navoiy viloyati"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Qashqadaryo viloyati"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Qoraqalpog'iston Respublikasi"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Samarqand viloyati"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "Sirdaryo viloyati"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "Surxondaryo viloyati"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "Toshkent shahri"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Name = "Toshkent viloyati"
+                        });
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Role", b =>
@@ -476,6 +549,38 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "System administrator",
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "School director",
+                            Name = "Director"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "School teacher",
+                            Name = "Teacher"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Student",
+                            Name = "Student"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Parent of student",
+                            Name = "Parent"
+                        });
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.School", b =>
@@ -487,6 +592,9 @@ namespace EduUz.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CityId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DirectorId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -539,6 +647,98 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Subjects");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Adabiyot"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Algebra"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Biologiya"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Davlat va huquq asoslari"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Fizika"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Geografiya"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Geometriya"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Informatika"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Ingliz tili"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Iqtisod"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "Jahon tarixi"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "Kimyo"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "Ona tili"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Name = "Rus tili"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Name = "Tarbiya"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Name = "Texnologiya"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Name = "O'zbekiston tarixi"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Name = "Chizmachilik"
+                        });
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Teacher", b =>
@@ -736,10 +936,9 @@ namespace EduUz.Infrastructure.Migrations
             modelBuilder.Entity("EduUz.Core.Models.Director", b =>
                 {
                     b.HasOne("EduUz.Core.Models.School", "School")
-                        .WithMany()
-                        .HasForeignKey("SchoolId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .WithOne("Director")
+                        .HasForeignKey("EduUz.Core.Models.Director", "SchoolId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("EduUz.Core.Models.User", "User")
                         .WithOne("Director")
@@ -910,7 +1109,7 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasOne("EduUz.Core.Models.City", "City")
                         .WithMany("Schools")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("City");
@@ -1022,6 +1221,9 @@ namespace EduUz.Infrastructure.Migrations
             modelBuilder.Entity("EduUz.Core.Models.School", b =>
                 {
                     b.Navigation("Classes");
+
+                    b.Navigation("Director")
+                        .IsRequired();
 
                     b.Navigation("Users");
                 });

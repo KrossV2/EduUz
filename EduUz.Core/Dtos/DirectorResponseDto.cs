@@ -12,6 +12,6 @@ public class DirectorResponseDto
     public string Username { get; set; }
 
     // School info
-    public int SchoolId { get; set; }
-    public string SchoolName { get; set; }
+    public int? SchoolId { get; set; }
+    public string? SchoolName { get; set; }
 }
