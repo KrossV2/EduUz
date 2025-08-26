@@ -25,6 +25,8 @@ using EduUz.Application.Mediatr.Admin.Directors.GetAllDirectors;
 using EduUz.Application.Mediatr.Auth.SignIn;
 using EduUz.Application.Mediatr.Auth.SignUp;
 using EduUz.Infrastructure.Database;
+using EduUz.Application.Mediatr.Admin.Regions.DeleteRegion;
+using EduUz.Application.Mediatr.Admin.Cities.GetAllCities;
 
 namespace EduUz.Web.Controllers;
 
@@ -36,6 +38,20 @@ public class AdminsController(IMediator mediator, EduUzDbContext context) : Cont
     public async Task<ActionResult<IEnumerable<Region>>> GetAllRegions()
     {
         var result = await mediator.Send(new GetAllRegionQuery());
+        return Ok(result);
+    }
+
+    [HttpDelete("regions/{id:int}")]
+    public async Task<IActionResult> DeleteRegion([FromRoute] int id)
+    {
+        await mediator.Send(new DeleteRegionCommand(id));
+        return Ok("Deleted Successfully!");
+    }
+
+    [HttpGet("cities")]
+    public async Task<IActionResult> GetAllCities()
+    {
+        var result = await mediator.Send(new GetAllCitiesQuery());
         return Ok(result);
     }
 
@@ -113,7 +129,7 @@ public class AdminsController(IMediator mediator, EduUzDbContext context) : Cont
     public async Task<IActionResult> DeleteSchool([FromRoute] int id)
     {
         await mediator.Send(new DeleteSchoolCommand(id));
-        return NoContent();
+        return Ok("Deleted Successfully!");
     }
 
     [HttpGet("users")]
@@ -141,7 +157,7 @@ public class AdminsController(IMediator mediator, EduUzDbContext context) : Cont
     public async Task<IActionResult> DeleteUser([FromRoute] int id)
     {
         await mediator.Send(new DeleteUserCommand(id));
-        return NoContent();
+        return Ok("Deleted Successfully!");
     }
 
     [HttpPost("users/teacher")]

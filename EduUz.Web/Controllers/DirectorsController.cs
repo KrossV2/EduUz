@@ -56,7 +56,7 @@ public class DirectorsController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> DeleteClass([FromRoute] int id)
     {
         await mediator.Send(new DeleteClassCommand(id));
-        return NoContent();
+        return Ok("Deleted Successfully!");
     }
 
     [HttpGet("classes/{id:int}/students")]

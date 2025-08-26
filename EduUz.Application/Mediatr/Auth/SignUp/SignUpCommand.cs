@@ -39,15 +39,15 @@ public class SignUpCommandHandler(IUserRepository userRepository, IPasswordHashe
             ? await context.Schools.FindAsync(user.SchoolId.Value)
             : null;
 
-        return new UserResponseDto(
-            Id: user.Id,
-            FirstName: user.FirstName,
-            LastName: user.LastName,
-            Email: user.Email,
-            
-            Username: user.Username,
-            RoleName: role?.Name ?? "Unknown",
-            SchoolName: school?.Name ?? "Not Assigned"
-        );
+        return new UserResponseDto
+        {
+            Id = user.Id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            Username = user.Username,
+            RoleName = role?.Name ?? "Unknown",
+            SchoolName = school?.Name ?? "Not Assigned"
+        };
     }
 }
