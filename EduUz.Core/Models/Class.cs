@@ -8,9 +8,9 @@ public class Class
     public string Name { get; set; }
     public ShiftType Shift { get; set; }
     public int SchoolId { get; set; }
-    public virtual School School { get; set; }
+    public School School { get; set; }
     public int? HomeroomTeacherId { get; set; }
-    public virtual Teacher HomeroomTeacher { get; set; }
-    public virtual ICollection<Student> Students { get; set; } = new List<Student>();
-    public virtual ICollection<LessonSchedule> Schedules { get; set; } = new List<LessonSchedule>();
+    public Teacher HomeroomTeacher { get; set; }
+    public  ICollection<Student> Students { get; set; } = new List<Student>();
+    public  ICollection<LessonSchedule> Schedules { get; set; } = new List<LessonSchedule>();
 }

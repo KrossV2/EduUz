@@ -3,6 +3,7 @@ using System;
 using EduUz.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EduUz.Infrastructure.Migrations
 {
     [DbContext(typeof(EduUzDbContext))]
-    partial class EduUzDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250825172618_AddedSomething")]
+    partial class AddedSomething
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -452,78 +455,6 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Regions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Andijon viloyati"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Buxoro viloyati"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Farg'ona viloyati"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Jizzax viloyati"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Xorazm viloyati"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Namangan viloyati"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Navoiy viloyati"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Qashqadaryo viloyati"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Qoraqalpog'iston Respublikasi"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Samarqand viloyati"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Sirdaryo viloyati"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Surxondaryo viloyati"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "Toshkent shahri"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Name = "Toshkent viloyati"
-                        });
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Role", b =>

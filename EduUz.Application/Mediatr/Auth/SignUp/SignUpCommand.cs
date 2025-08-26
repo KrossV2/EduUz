@@ -29,8 +29,10 @@ public class SignUpCommandHandler(IUserRepository userRepository, IPasswordHashe
             SchoolId = request.SchoolId > 0 ? request.SchoolId : null
         };
 
-        await userRepository.AddAsync(user);
-        await userRepository.SaveChangesAsync();
+
+
+        context.Users.Add(user);
+        await context.SaveChangesAsync();
 
         var role = await context.Roles.FindAsync(user.RoleId);
         var school = user.SchoolId.HasValue

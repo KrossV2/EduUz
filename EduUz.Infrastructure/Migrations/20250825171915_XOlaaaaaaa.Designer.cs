@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EduUz.Infrastructure.Migrations
 {
     [DbContext(typeof(EduUzDbContext))]
-    [Migration("20250820180411_HullasMigratsiya")]
-    partial class HullasMigratsiya
+    [Migration("20250825171915_XOlaaaaaaa")]
+    partial class XOlaaaaaaa
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,9 +33,8 @@ namespace EduUz.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("integer");
@@ -47,10 +46,9 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.HasIndex("TimetableId", "StudentId")
-                        .IsUnique();
+                    b.HasIndex("TimetableId");
 
-                    b.ToTable("Attendances", (string)null);
+                    b.ToTable("Attendances");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.BehaviorRecord", b =>
@@ -63,8 +61,7 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("text");
 
                     b.Property<int>("Points")
                         .HasColumnType("integer");
@@ -84,7 +81,7 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("BehaviorRecords", (string)null);
+                    b.ToTable("BehaviorRecords");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.City", b =>
@@ -97,8 +94,7 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("text");
 
                     b.Property<int>("RegionId")
                         .HasColumnType("integer");
@@ -107,7 +103,7 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Class", b =>
@@ -123,15 +119,13 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.Property<int>("SchoolId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Shift")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Shift")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -139,7 +133,7 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.HasIndex("SchoolId");
 
-                    b.ToTable("Classes", (string)null);
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Director", b =>
@@ -156,21 +150,14 @@ namespace EduUz.Infrastructure.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("SchoolId")
-                        .IsUnique();
+                    b.HasIndex("SchoolId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.HasIndex("UserId1")
-                        .IsUnique();
-
-                    b.ToTable("Directors", (string)null);
+                    b.ToTable("Directors");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Excuse", b =>
@@ -213,14 +200,11 @@ namespace EduUz.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("GradeType")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("GradeType")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsPendingApproval")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
+                        .HasColumnType("boolean");
 
                     b.Property<int?>("OriginalGradeId")
                         .HasColumnType("integer");
@@ -242,7 +226,7 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.HasIndex("TeacherSubjectId");
 
-                    b.ToTable("Grades", (string)null);
+                    b.ToTable("Grades");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.GradeChangeRequest", b =>
@@ -287,16 +271,14 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.Property<string>("AttachmentPath")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("text");
 
                     b.Property<int>("ClassId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("timestamp with time zone");
@@ -310,7 +292,7 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.HasIndex("TeacherSubjectId");
 
-                    b.ToTable("Homeworks", (string)null);
+                    b.ToTable("Homeworks");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.HomeworkSubmission", b =>
@@ -374,12 +356,11 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClassId");
+
                     b.HasIndex("TeacherSubjectId");
 
-                    b.HasIndex("ClassId", "DayOfWeek", "LessonNumber")
-                        .IsUnique();
-
-                    b.ToTable("LessonSchedules", (string)null);
+                    b.ToTable("LessonSchedules");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Notification", b =>
@@ -391,19 +372,15 @@ namespace EduUz.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsRead")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("NotificationType")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("RelatedEntityId")
                         .HasColumnType("integer");
@@ -418,7 +395,7 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications", (string)null);
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Parent", b =>
@@ -432,18 +409,12 @@ namespace EduUz.Infrastructure.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.HasIndex("UserId1")
-                        .IsUnique();
-
-                    b.ToTable("Parents", (string)null);
+                    b.ToTable("Parents");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.ParentStudent", b =>
@@ -462,12 +433,11 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ParentId");
+
                     b.HasIndex("StudentId");
 
-                    b.HasIndex("ParentId", "StudentId")
-                        .IsUnique();
-
-                    b.ToTable("ParentStudents", (string)null);
+                    b.ToTable("ParentStudents");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Region", b =>
@@ -480,84 +450,11 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Regions", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Andijon viloyati"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Buxoro viloyati"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Farg'ona viloyati"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Jizzax viloyati"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Xorazm viloyati"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Namangan viloyati"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Navoiy viloyati"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Qashqadaryo viloyati"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Qoraqalpog'iston Respublikasi"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Samarqand viloyati"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Sirdaryo viloyati"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Surxondaryo viloyati"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "Toshkent shahri"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Name = "Toshkent viloyati"
-                        });
+                    b.ToTable("Regions");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Role", b =>
@@ -570,49 +467,15 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "System administrator",
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "School director",
-                            Name = "Director"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "School teacher",
-                            Name = "Teacher"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Student",
-                            Name = "Student"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "Parent of student",
-                            Name = "Parent"
-                        });
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.School", b =>
@@ -628,14 +491,13 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("Schools", (string)null);
+                    b.ToTable("Schools");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Student", b =>
@@ -652,9 +514,6 @@ namespace EduUz.Infrastructure.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
@@ -662,10 +521,7 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.HasIndex("UserId1")
-                        .IsUnique();
-
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Subject", b =>
@@ -678,104 +534,11 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subjects", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Adabiyot"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Algebra"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Biologiya"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Davlat va huquq asoslari"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Fizika"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Geografiya"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Geometriya"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Informatika"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Ingliz tili"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Iqtisod"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Jahon tarixi"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Kimyo"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "Ona tili"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Name = "Rus tili"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Name = "Tarbiya"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Name = "Texnologiya"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Name = "O'zbekiston tarixi"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Name = "Chizmachilik"
-                        });
+                    b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Teacher", b =>
@@ -787,14 +550,9 @@ namespace EduUz.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsHomeroomTeacher")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
+                        .HasColumnType("boolean");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("UserId1")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -802,10 +560,7 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.HasIndex("UserId1")
-                        .IsUnique();
-
-                    b.ToTable("Teachers", (string)null);
+                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.TeacherSubject", b =>
@@ -826,10 +581,9 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.HasIndex("TeacherId", "SubjectId")
-                        .IsUnique();
+                    b.HasIndex("TeacherId");
 
-                    b.ToTable("TeacherSubjects", (string)null);
+                    b.ToTable("TeacherSubjects");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Timetable", b =>
@@ -856,7 +610,7 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.HasIndex("LessonScheduleId");
 
-                    b.ToTable("Timetables", (string)null);
+                    b.ToTable("Timetables");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.User", b =>
@@ -909,7 +663,7 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("EduUz.Core.Models.Attendance", b =>
@@ -942,7 +696,7 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasOne("EduUz.Core.Models.Teacher", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Student");
@@ -955,7 +709,7 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasOne("EduUz.Core.Models.Region", "Region")
                         .WithMany("Cities")
                         .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Region");
@@ -966,7 +720,7 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasOne("EduUz.Core.Models.Teacher", "HomeroomTeacher")
                         .WithMany("HomeroomClasses")
                         .HasForeignKey("HomeroomTeacherId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("EduUz.Core.Models.School", "School")
                         .WithMany("Classes")
@@ -982,20 +736,16 @@ namespace EduUz.Infrastructure.Migrations
             modelBuilder.Entity("EduUz.Core.Models.Director", b =>
                 {
                     b.HasOne("EduUz.Core.Models.School", "School")
-                        .WithOne()
-                        .HasForeignKey("EduUz.Core.Models.Director", "SchoolId")
+                        .WithMany()
+                        .HasForeignKey("SchoolId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("EduUz.Core.Models.User", "User")
-                        .WithOne()
+                        .WithOne("Director")
                         .HasForeignKey("EduUz.Core.Models.Director", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("EduUz.Core.Models.User", null)
-                        .WithOne("Director")
-                        .HasForeignKey("EduUz.Core.Models.Director", "UserId1");
 
                     b.Navigation("School");
 
@@ -1018,7 +768,7 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasOne("EduUz.Core.Models.Grade", "OriginalGrade")
                         .WithMany()
                         .HasForeignKey("OriginalGradeId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("EduUz.Core.Models.Student", "Student")
                         .WithMany("Grades")
@@ -1029,7 +779,7 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasOne("EduUz.Core.Models.TeacherSubject", "TeacherSubject")
                         .WithMany()
                         .HasForeignKey("TeacherSubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("OriginalGrade");
@@ -1073,7 +823,8 @@ namespace EduUz.Infrastructure.Migrations
                 {
                     b.HasOne("EduUz.Core.Models.Grade", "Grade")
                         .WithMany()
-                        .HasForeignKey("GradeId");
+                        .HasForeignKey("GradeId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("EduUz.Core.Models.Homework", "Homework")
                         .WithMany()
@@ -1105,7 +856,7 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasOne("EduUz.Core.Models.TeacherSubject", "TeacherSubject")
                         .WithMany()
                         .HasForeignKey("TeacherSubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Class");
@@ -1127,14 +878,10 @@ namespace EduUz.Infrastructure.Migrations
             modelBuilder.Entity("EduUz.Core.Models.Parent", b =>
                 {
                     b.HasOne("EduUz.Core.Models.User", "User")
-                        .WithOne()
+                        .WithOne("Parent")
                         .HasForeignKey("EduUz.Core.Models.Parent", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("EduUz.Core.Models.User", null)
-                        .WithOne("Parent")
-                        .HasForeignKey("EduUz.Core.Models.Parent", "UserId1");
 
                     b.Navigation("User");
                 });
@@ -1163,7 +910,7 @@ namespace EduUz.Infrastructure.Migrations
                     b.HasOne("EduUz.Core.Models.City", "City")
                         .WithMany("Schools")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("City");
@@ -1173,17 +920,14 @@ namespace EduUz.Infrastructure.Migrations
                 {
                     b.HasOne("EduUz.Core.Models.Class", "Class")
                         .WithMany("Students")
-                        .HasForeignKey("ClassId");
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("EduUz.Core.Models.User", "User")
-                        .WithOne()
+                        .WithOne("Student")
                         .HasForeignKey("EduUz.Core.Models.Student", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("EduUz.Core.Models.User", null)
-                        .WithOne("Student")
-                        .HasForeignKey("EduUz.Core.Models.Student", "UserId1");
 
                     b.Navigation("Class");
 
@@ -1193,14 +937,10 @@ namespace EduUz.Infrastructure.Migrations
             modelBuilder.Entity("EduUz.Core.Models.Teacher", b =>
                 {
                     b.HasOne("EduUz.Core.Models.User", "User")
-                        .WithOne()
+                        .WithOne("Teacher")
                         .HasForeignKey("EduUz.Core.Models.Teacher", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("EduUz.Core.Models.User", null)
-                        .WithOne("Teacher")
-                        .HasForeignKey("EduUz.Core.Models.Teacher", "UserId1");
 
                     b.Navigation("User");
                 });
@@ -1245,8 +985,7 @@ namespace EduUz.Infrastructure.Migrations
 
                     b.HasOne("EduUz.Core.Models.School", "School")
                         .WithMany("Users")
-                        .HasForeignKey("SchoolId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("SchoolId");
 
                     b.Navigation("Role");
 

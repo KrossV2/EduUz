@@ -30,7 +30,7 @@ namespace EduUz.Web.Controllers;
 
 [ApiController]
 [Route("api/admin")]
-public class AdminsController(IMediator mediator  ,  EduUzDbContext context) : ControllerBase
+public class AdminsController(IMediator mediator, EduUzDbContext context) : ControllerBase
 {
     [HttpGet("regions")]
     public async Task<ActionResult<IEnumerable<Region>>> GetAllRegions()
@@ -187,7 +187,8 @@ public class AdminsController(IMediator mediator  ,  EduUzDbContext context) : C
         try
         {
             var result = await mediator.Send(new SignUpCommand(request));
-        return Ok(result);
+            await transaction.CommitAsync();
+            return Ok(result);
         }
         catch (Exception ex)
         {

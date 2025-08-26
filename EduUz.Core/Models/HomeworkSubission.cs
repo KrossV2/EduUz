@@ -5,10 +5,10 @@ public class HomeworkSubmission
     public int Id { get; set; }
 
     public int StudentId { get; set; }
-    public virtual Student Student { get; set; }
+    public  Student Student { get; set; }
 
     public int HomeworkId { get; set; }
-    public virtual Homework Homework { get; set; }
+    public Homework Homework { get; set; }
 
     public string FileUrl { get; set; }
 
@@ -17,5 +17,5 @@ public class HomeworkSubmission
     public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
 
     public int? GradeId { get; set; }
-    public virtual Grade Grade { get; set; }
+    public Grade Grade { get; set; }
 }

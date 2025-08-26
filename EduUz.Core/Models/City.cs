@@ -8,6 +8,6 @@ public class City
     public string Name { get; set; }
     public int RegionId { get; set; }
     [JsonIgnore]
-    public virtual Region Region { get; set; }
-    public virtual ICollection<School> Schools { get; set; } = new List<School>();
+    public  Region Region { get; set; }
+    public  ICollection<School> Schools { get; set; } = new List<School>();
 }

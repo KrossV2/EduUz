@@ -4,12 +4,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace EduUz.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class HullasMigratsiya : Migration
+    public partial class XOlaaaaaaa : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +18,7 @@ namespace EduUz.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,8 +31,8 @@ namespace EduUz.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,7 +45,7 @@ namespace EduUz.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,7 +58,7 @@ namespace EduUz.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
                     RegionId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -71,7 +69,7 @@ namespace EduUz.Infrastructure.Migrations
                         column: x => x.RegionId,
                         principalTable: "Regions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,7 +78,7 @@ namespace EduUz.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
                     CityId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -91,7 +89,7 @@ namespace EduUz.Infrastructure.Migrations
                         column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -121,8 +119,7 @@ namespace EduUz.Infrastructure.Migrations
                         name: "FK_Users_Schools_SchoolId",
                         column: x => x.SchoolId,
                         principalTable: "Schools",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -132,8 +129,7 @@ namespace EduUz.Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    SchoolId = table.Column<int>(type: "integer", nullable: false),
-                    UserId1 = table.Column<int>(type: "integer", nullable: true)
+                    SchoolId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -150,11 +146,6 @@ namespace EduUz.Infrastructure.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Directors_Users_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "Users",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -164,10 +155,10 @@ namespace EduUz.Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    Message = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    Message = table.Column<string>(type: "text", nullable: false),
                     SentAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    IsRead = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    NotificationType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    IsRead = table.Column<bool>(type: "boolean", nullable: false),
+                    NotificationType = table.Column<string>(type: "text", nullable: false),
                     RelatedEntityId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
@@ -187,8 +178,7 @@ namespace EduUz.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
-                    UserId1 = table.Column<int>(type: "integer", nullable: true)
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -199,11 +189,6 @@ namespace EduUz.Infrastructure.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Parents_Users_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "Users",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -213,8 +198,7 @@ namespace EduUz.Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    IsHomeroomTeacher = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    UserId1 = table.Column<int>(type: "integer", nullable: true)
+                    IsHomeroomTeacher = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -225,11 +209,6 @@ namespace EduUz.Infrastructure.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Teachers_Users_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "Users",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -238,8 +217,8 @@ namespace EduUz.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Shift = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Shift = table.Column<int>(type: "integer", nullable: false),
                     SchoolId = table.Column<int>(type: "integer", nullable: false),
                     HomeroomTeacherId = table.Column<int>(type: "integer", nullable: true)
                 },
@@ -257,7 +236,7 @@ namespace EduUz.Infrastructure.Migrations
                         column: x => x.HomeroomTeacherId,
                         principalTable: "Teachers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -293,8 +272,7 @@ namespace EduUz.Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    ClassId = table.Column<int>(type: "integer", nullable: true),
-                    UserId1 = table.Column<int>(type: "integer", nullable: true)
+                    ClassId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -303,18 +281,14 @@ namespace EduUz.Infrastructure.Migrations
                         name: "FK_Students_Classes_ClassId",
                         column: x => x.ClassId,
                         principalTable: "Classes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Students_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Students_Users_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "Users",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -325,9 +299,9 @@ namespace EduUz.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     TeacherSubjectId = table.Column<int>(type: "integer", nullable: false),
                     ClassId = table.Column<int>(type: "integer", nullable: false),
-                    Description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
                     DueDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    AttachmentPath = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
+                    AttachmentPath = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -371,7 +345,7 @@ namespace EduUz.Infrastructure.Migrations
                         column: x => x.TeacherSubjectId,
                         principalTable: "TeacherSubjects",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -382,7 +356,7 @@ namespace EduUz.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     StudentId = table.Column<int>(type: "integer", nullable: false),
                     TeacherId = table.Column<int>(type: "integer", nullable: false),
-                    Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
                     Points = table.Column<int>(type: "integer", nullable: false),
                     RecordDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -400,7 +374,7 @@ namespace EduUz.Infrastructure.Migrations
                         column: x => x.TeacherId,
                         principalTable: "Teachers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -432,10 +406,10 @@ namespace EduUz.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     StudentId = table.Column<int>(type: "integer", nullable: false),
                     TeacherSubjectId = table.Column<int>(type: "integer", nullable: false),
-                    GradeType = table.Column<string>(type: "text", nullable: false),
+                    GradeType = table.Column<int>(type: "integer", nullable: false),
                     Value = table.Column<int>(type: "integer", nullable: false),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    IsPendingApproval = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    IsPendingApproval = table.Column<bool>(type: "boolean", nullable: false),
                     ChangeReason = table.Column<string>(type: "text", nullable: false),
                     OriginalGradeId = table.Column<int>(type: "integer", nullable: true)
                 },
@@ -447,7 +421,7 @@ namespace EduUz.Infrastructure.Migrations
                         column: x => x.OriginalGradeId,
                         principalTable: "Grades",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Grades_Students_StudentId",
                         column: x => x.StudentId,
@@ -459,7 +433,7 @@ namespace EduUz.Infrastructure.Migrations
                         column: x => x.TeacherSubjectId,
                         principalTable: "TeacherSubjects",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -553,7 +527,8 @@ namespace EduUz.Infrastructure.Migrations
                         name: "FK_HomeworkSubmissions_Grades_GradeId",
                         column: x => x.GradeId,
                         principalTable: "Grades",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_HomeworkSubmissions_Homeworks_HomeworkId",
                         column: x => x.HomeworkId,
@@ -576,7 +551,7 @@ namespace EduUz.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     TimetableId = table.Column<int>(type: "integer", nullable: false),
                     StudentId = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false)
+                    Status = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -595,74 +570,15 @@ namespace EduUz.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Regions",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 1, "Andijon viloyati" },
-                    { 2, "Buxoro viloyati" },
-                    { 3, "Farg'ona viloyati" },
-                    { 4, "Jizzax viloyati" },
-                    { 5, "Xorazm viloyati" },
-                    { 6, "Namangan viloyati" },
-                    { 7, "Navoiy viloyati" },
-                    { 8, "Qashqadaryo viloyati" },
-                    { 9, "Qoraqalpog'iston Respublikasi" },
-                    { 10, "Samarqand viloyati" },
-                    { 11, "Sirdaryo viloyati" },
-                    { 12, "Surxondaryo viloyati" },
-                    { 13, "Toshkent shahri" },
-                    { 14, "Toshkent viloyati" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Roles",
-                columns: new[] { "Id", "Description", "Name" },
-                values: new object[,]
-                {
-                    { 1, "System administrator", "Admin" },
-                    { 2, "School director", "Director" },
-                    { 3, "School teacher", "Teacher" },
-                    { 4, "Student", "Student" },
-                    { 5, "Parent of student", "Parent" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Subjects",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 1, "Adabiyot" },
-                    { 2, "Algebra" },
-                    { 3, "Biologiya" },
-                    { 4, "Davlat va huquq asoslari" },
-                    { 5, "Fizika" },
-                    { 6, "Geografiya" },
-                    { 7, "Geometriya" },
-                    { 8, "Informatika" },
-                    { 9, "Ingliz tili" },
-                    { 10, "Iqtisod" },
-                    { 11, "Jahon tarixi" },
-                    { 12, "Kimyo" },
-                    { 13, "Ona tili" },
-                    { 14, "Rus tili" },
-                    { 15, "Tarbiya" },
-                    { 16, "Texnologiya" },
-                    { 17, "O'zbekiston tarixi" },
-                    { 18, "Chizmachilik" }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Attendances_StudentId",
                 table: "Attendances",
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Attendances_TimetableId_StudentId",
+                name: "IX_Attendances_TimetableId",
                 table: "Attendances",
-                columns: new[] { "TimetableId", "StudentId" },
-                unique: true);
+                column: "TimetableId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BehaviorRecords_StudentId",
@@ -692,19 +608,12 @@ namespace EduUz.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Directors_SchoolId",
                 table: "Directors",
-                column: "SchoolId",
-                unique: true);
+                column: "SchoolId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Directors_UserId",
                 table: "Directors",
                 column: "UserId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Directors_UserId1",
-                table: "Directors",
-                column: "UserId1",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -758,10 +667,9 @@ namespace EduUz.Infrastructure.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LessonSchedules_ClassId_DayOfWeek_LessonNumber",
+                name: "IX_LessonSchedules_ClassId",
                 table: "LessonSchedules",
-                columns: new[] { "ClassId", "DayOfWeek", "LessonNumber" },
-                unique: true);
+                column: "ClassId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LessonSchedules_TeacherSubjectId",
@@ -780,16 +688,9 @@ namespace EduUz.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Parents_UserId1",
-                table: "Parents",
-                column: "UserId1",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ParentStudents_ParentId_StudentId",
+                name: "IX_ParentStudents_ParentId",
                 table: "ParentStudents",
-                columns: new[] { "ParentId", "StudentId" },
-                unique: true);
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ParentStudents_StudentId",
@@ -813,21 +714,9 @@ namespace EduUz.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_UserId1",
-                table: "Students",
-                column: "UserId1",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Teachers_UserId",
                 table: "Teachers",
                 column: "UserId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Teachers_UserId1",
-                table: "Teachers",
-                column: "UserId1",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -836,10 +725,9 @@ namespace EduUz.Infrastructure.Migrations
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TeacherSubjects_TeacherId_SubjectId",
+                name: "IX_TeacherSubjects_TeacherId",
                 table: "TeacherSubjects",
-                columns: new[] { "TeacherId", "SubjectId" },
-                unique: true);
+                column: "TeacherId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Timetables_LessonScheduleId",

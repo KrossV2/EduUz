@@ -37,6 +37,7 @@ new Claim("school_name", user.School?.Name ?? string.Empty),
         var token = new JwtSecurityToken(
             "cafe.uz",
             "cafe.uz",
+            claims: claims,
             expires: DateTime.UtcNow.Add(TimeSpan.FromDays(1)),
             signingCredentials: credentials
         );

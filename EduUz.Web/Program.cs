@@ -1,6 +1,9 @@
+using System;
 using EduUz.Application.DiContainer;
 using EduUz.Application.Settings;
+using EduUz.Infrastructure.Database;
 using EduUz.Infrastructure.DiContainer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
@@ -17,6 +20,7 @@ builder.Services.AddSwaggerGen();
 // Di
 builder.Services.AddRepositories()
     .AddDatabase(configurations);
+
 
 // Jwt
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
@@ -74,7 +78,13 @@ Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .CreateLogger();
 
-var app = builder.Build(); 
+var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<EduUzDbContext>();
+    Console.WriteLine(context.Database.GetDbConnection().ConnectionString);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

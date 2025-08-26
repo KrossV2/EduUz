@@ -9,5 +9,5 @@ public class GradeChangeRequest
     public string Status { get; set; } = "Pending"; // Pending, Approved, Rejected
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    public virtual Grade Grade { get; set; }
+    public  Grade Grade { get; set; }
 }

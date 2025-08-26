@@ -13,14 +13,14 @@ public class User
     public string PasswordHash { get; set; }
 
     public int RoleId { get; set; }
-    public virtual Role Role { get; set; }
+    public Role Role { get; set; }
 
     public int? SchoolId { get; set; }
-    public virtual School School { get; set; }
+    public School School { get; set; }
 
     // Role-specific navigation properties
-    public virtual Teacher Teacher { get; set; }
-    public virtual Student Student { get; set; }
-    public virtual Parent Parent { get; set; }
-    public virtual Director Director { get; set; }
+    public Teacher Teacher { get; set; }
+    public Student Student { get; set; }
+    public Parent Parent { get; set; }
+    public Director Director { get; set; }
 }

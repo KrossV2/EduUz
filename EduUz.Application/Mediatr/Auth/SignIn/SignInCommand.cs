@@ -1,4 +1,4 @@
-﻿using EduUz.Application.Helpers;
+﻿    using EduUz.Application.Helpers;
 using EduUz.Application.Repositories.Interfaces;
 using EduUz.Application.Services;
 using EduUz.Core.Dtos;
@@ -25,8 +25,10 @@ public class SignInCommandHandler(
         var request = command.Request;
 
         var user = await context.Users
+            .Include(u => u.Role) // 👈 Load the Role
             .FirstOrDefaultAsync(u => u.Email == request.EmailOrUsername
-                                   || u.Username == request.EmailOrUsername);
+                                   || u.Username == request.EmailOrUsername, cancellationToken);
+
 
 
         if (user is null)
