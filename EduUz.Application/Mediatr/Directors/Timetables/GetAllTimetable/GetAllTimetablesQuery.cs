@@ -1,6 +1,10 @@
-﻿using EduUz.Application.Repositories.Interfaces;
+﻿using AutoMapper;
+using EduUz.Application.Repositories.Interfaces;
+using EduUz.Core.Dtos;
 using EduUz.Core.Models;
+using EduUz.Infrastructure.Database;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace EduUz.Application.Mediatr.Timetables.GetAllTimetable;
 
