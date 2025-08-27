@@ -92,7 +92,7 @@ public class DirectorsController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> DeleteTimetable([FromRoute] int id)
     {
         await mediator.Send(new DeleteTimetableCommand(id));
-        return NoContent();
+        return Ok("Deleted Successfully!");
     }
 
     // Grade change requests and reports
@@ -150,7 +150,7 @@ public class DirectorsController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> DeleteTeacher([FromRoute] int id)
     {
         await mediator.Send(new DeleteTeacherCommand(id));
-        return NoContent();
+        return Ok("Deleted Successfully!");
     }
 
     [HttpGet("teachers/{id:int}/subjects")]

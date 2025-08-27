@@ -11,5 +11,5 @@ public class Timetable
     public DateTime LessonDate { get; set; }
     public TimeSpan StartTime { get; set; }
     public TimeSpan EndTime { get; set; }
-    public   ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
+    public ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
 }

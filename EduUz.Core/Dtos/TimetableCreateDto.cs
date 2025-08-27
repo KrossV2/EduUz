@@ -1,9 +1,9 @@
 ﻿namespace EduUz.Core.Dtos;
 
-public record TimetableCreateDto(
-    int ClassId,
-    int TeacherSubjectId,
-    DayOfWeek DayOfWeek,
-    int LessonNumber,
-    TimeSpan StartTime,
-    TimeSpan EndTime);
+public class TimetableCreateDto
+{
+    public int LessonScheduleId { get; set; }   // Qaysi jadval asosida
+    public DateTime LessonDate { get; set; }    // Dars sanasi
+    public TimeSpan StartTime { get; set; }     // Dars boshlanishi
+    public TimeSpan EndTime { get; set; }       // Dars tugashi
+};

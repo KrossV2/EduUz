@@ -2,6 +2,7 @@
 using EduUz.Application.Repositories.Interfaces;
 using EduUz.Core.Dtos;
 using EduUz.Core.Models;
+using EduUz.Infrastructure.Database;
 using MediatR;
 
 namespace EduUz.Application.Mediatr.Timetables.CreateTimetable;
@@ -11,7 +12,7 @@ public class CreateTimetableCommand(TimetableCreateDto dto) : IRequest<Timetable
     public TimetableCreateDto TimetableCreateDto { get; set; } = dto;
 }
 
-public class CreateTimetableCommandHandler(ITimetableRepository repo, IMapper mapper) : IRequestHandler<CreateTimetableCommand, TimetableResponseDto>
+public class CreateTimetableCommandHandler(ITimetableRepository repo, IMapper mapper , EduUzDbContext context) : IRequestHandler<CreateTimetableCommand, TimetableResponseDto>
 {
     public async Task<TimetableResponseDto> Handle(CreateTimetableCommand request, CancellationToken cancellationToken)
     {
@@ -22,7 +23,17 @@ public class CreateTimetableCommandHandler(ITimetableRepository repo, IMapper ma
             await repo.AddAsync(table);
             await repo.SaveChangesAsync();
 
-            var response = mapper.Map<TimetableResponseDto>(table);
+            var response = new TimetableResponseDto
+            {
+                Id = table.Id,
+                ClassName = table.LessonSchedule.Class.Name,
+                SubjectName = table.LessonSchedule.TeacherSubject.Subject.Name,
+                TeacherName = table.LessonSchedule.TeacherSubject.Teacher.User.FirstName + "  " + table.LessonSchedule.TeacherSubject.Teacher.User.LastName,
+                DayOfWeek = table.LessonSchedule.DayOfWeek.ToString(),
+                LessonNumber = table.LessonSchedule.LessonNumber,
+                StartTime = table.StartTime.ToString(),
+                EndTime = table.EndTime.ToString()
+            };
 
             return response;
         }
