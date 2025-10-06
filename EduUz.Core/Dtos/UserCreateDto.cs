@@ -5,6 +5,7 @@ public record UserCreateDto(
     string LastName,
     string Email,
     string Username,
+    string PhoneNumber,
     string Password,
     int RoleId,
     int? SchoolId);
