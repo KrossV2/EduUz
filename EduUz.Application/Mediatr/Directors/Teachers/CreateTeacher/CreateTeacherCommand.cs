@@ -44,6 +44,7 @@ public class CreateTeacherCommandHandler(ITeacherRepository repo, IMapper mapper
                 FullName = teacher.User.FirstName + " " + teacher.User.LastName,
                 IsHomeroomteacher = teacher.IsHomeroomTeacher,
                 SchoolName = school.Name,
+                PhoneNumber = user.PhoneNumber,
                 Subjects = teacherWithAllData.TeacherSubjects
                 .Select(ts => ts.Subject.Name)
                 .ToList()

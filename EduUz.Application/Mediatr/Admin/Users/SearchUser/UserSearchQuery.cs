@@ -36,6 +36,7 @@ public class UserSearchQueryHandler : IRequestHandler<UserSearchQuery, List<User
                 u.FirstName.Contains(request.SearchTerm) ||
                 u.LastName.Contains(request.SearchTerm) ||
                 u.Email.Contains(request.SearchTerm) ||
+                u.PhoneNumber.Contains(request.SearchTerm) ||
                 u.Username.Contains(request.SearchTerm));
         }
 

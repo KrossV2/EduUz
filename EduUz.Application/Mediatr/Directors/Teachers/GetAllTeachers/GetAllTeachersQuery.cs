@@ -29,6 +29,7 @@ public class GetAllTeachersQueryHandler(ITeacherRepository repo, EduUzDbContext 
             FullName = t.User.FirstName + " " + t.User.LastName,
             IsHomeroomteacher = t.IsHomeroomTeacher,
             SchoolName = t.User.School.Name,
+            PhoneNumber = t.User.PhoneNumber,
             Subjects = t.TeacherSubjects.Select(s => s.Subject.Name).ToList(),
         });
     }

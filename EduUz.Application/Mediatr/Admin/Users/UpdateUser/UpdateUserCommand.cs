@@ -35,6 +35,7 @@ public class UpdateUserCommandHanler(IUserRepository repo, IMapper mapper , EduU
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email =  user.Email,
+            PhoneNumber =  user.PhoneNumber,
             Username = user.Username,
             RoleName = rolename.Name,
             SchoolName = school.Name

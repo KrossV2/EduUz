@@ -22,6 +22,7 @@ public class GetAllDirectorsQueryHandler(EduUzDbContext context)
                 FirstName = d.User.FirstName,
                 LastName = d.User.LastName,
                 Email = d.User.Email,
+                PhoneNumber = d.User.PhoneNumber,
                 Username = d.User.Username,
                 SchoolId = d.SchoolId,
                 SchoolName = d.School.Name
