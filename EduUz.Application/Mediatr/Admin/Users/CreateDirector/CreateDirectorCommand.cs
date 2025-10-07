@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EduUz.Application.Repositories.Interfaces;
+using EduUz.Application.Services;
 using EduUz.Core.Dtos;
 using EduUz.Core.Models;
 using EduUz.Infrastructure.Database;
@@ -17,12 +18,14 @@ public class CreateDirectorCommandHandler : IRequestHandler<CreateDirectorComman
     private readonly IDirectorRepository _repo;
     private readonly IMapper _mapper;
     private readonly EduUzDbContext _context;
+    private readonly IFileService fileService;
 
-    public CreateDirectorCommandHandler(IDirectorRepository repo, IMapper mapper, EduUzDbContext context)
+    public CreateDirectorCommandHandler(IDirectorRepository repo, IMapper mapper, EduUzDbContext context , IFileService fileservice)
     {
         _repo = repo;
         _mapper = mapper;
         _context = context;
+        fileService = fileservice;
     }
 
     public async Task<int> Handle(CreateDirectorCommand request, CancellationToken cancellationToken)
@@ -34,6 +37,11 @@ public class CreateDirectorCommandHandler : IRequestHandler<CreateDirectorComman
             if (user == null)
             {
                 throw new ApplicationException("User not found");
+            }
+
+            if (request.DirectorCreateDto.Image != null)
+            {
+                user.ImagePath = await fileService.SaveFileAsync(request.DirectorCreateDto.Image , "users");
             }
 
             var director = _mapper.Map<Director>(request.DirectorCreateDto);

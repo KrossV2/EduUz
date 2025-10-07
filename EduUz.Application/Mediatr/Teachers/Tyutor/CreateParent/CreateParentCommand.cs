@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EduUz.Application.Repositories.Interfaces;
+using EduUz.Application.Services;
 using EduUz.Core.Models;
 using MediatR;
 

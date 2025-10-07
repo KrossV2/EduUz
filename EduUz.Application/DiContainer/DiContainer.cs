@@ -35,6 +35,7 @@ public static class DiContainer
         services.AddScoped<IStatisticsRepository, StatisticsRepository>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IFileService, FileService>();
 
 
         services.AddAutoMapper(typeof(MappingProfile));

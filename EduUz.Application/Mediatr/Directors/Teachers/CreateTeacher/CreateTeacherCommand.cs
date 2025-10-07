@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EduUz.Application.Repositories.Interfaces;
+using EduUz.Application.Services;
 using EduUz.Core.Dtos;
 using EduUz.Core.Models;
 using EduUz.Infrastructure.Database;
@@ -13,18 +14,20 @@ public class CreateTeacherCommand(TeacherCreateDto dto) : IRequest<TeacherRespon
     public TeacherCreateDto TeacherCreateDto { get; set; } = dto;
 }
 
-public class CreateTeacherCommandHandler(ITeacherRepository repo, IMapper mapper , EduUzDbContext context) : IRequestHandler<CreateTeacherCommand, TeacherResponseDto>
+public class CreateTeacherCommandHandler(ITeacherRepository repo, IMapper mapper, EduUzDbContext context , IFileService  fileService) : IRequestHandler<CreateTeacherCommand, TeacherResponseDto>
 {
     public async Task<TeacherResponseDto> Handle(CreateTeacherCommand request, CancellationToken cancellationToken)
     {
         try
         {
             var teacher = mapper.Map<Teacher>(request.TeacherCreateDto);
-
-            await repo.AddAsync(teacher);
-            await repo.SaveChangesAsync();
-
+            
             var user = await context.Users.FindAsync(teacher.UserId);
+
+            if (request.TeacherCreateDto.Image != null)
+            {
+                user.ImagePath = await fileService.SaveFileAsync(request.TeacherCreateDto.Image, "users");
+            }
 
             var school = await context.Schools.FindAsync(user.SchoolId);
 
@@ -34,6 +37,9 @@ public class CreateTeacherCommandHandler(ITeacherRepository repo, IMapper mapper
     .Include(t => t.TeacherSubjects)
         .ThenInclude(ts => ts.Subject)
     .FirstOrDefaultAsync(t => t.Id == teacher.Id, cancellationToken);
+
+            await repo.AddAsync(teacher);
+            await repo.SaveChangesAsync();
 
             if (school == null)
                 throw new Exception();

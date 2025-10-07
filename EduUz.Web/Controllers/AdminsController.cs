@@ -27,12 +27,13 @@ using EduUz.Application.Mediatr.Auth.SignUp;
 using EduUz.Infrastructure.Database;
 using EduUz.Application.Mediatr.Admin.Regions.DeleteRegion;
 using EduUz.Application.Mediatr.Admin.Cities.GetAllCities;
+using EduUz.Application.Services;
 
 namespace EduUz.Web.Controllers;
 
 [ApiController]
 [Route("api/admin")]
-public class AdminsController(IMediator mediator, EduUzDbContext context) : ControllerBase
+public class AdminsController(IMediator mediator, EduUzDbContext context , IFileService fileService) : ControllerBase
 {
     [HttpGet("regions")]
     public async Task<ActionResult<IEnumerable<Region>>> GetAllRegions()

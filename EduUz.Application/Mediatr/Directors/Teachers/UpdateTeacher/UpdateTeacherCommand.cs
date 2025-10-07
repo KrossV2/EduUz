@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EduUz.Application.Repositories.Interfaces;
+using EduUz.Application.Services;
 using EduUz.Core.Dtos;
 using MediatR;
 
@@ -11,7 +12,7 @@ public class UpdateTeacherCommand(TeacherUpdateDto dto  , int id)   :  IRequest<
     public TeacherUpdateDto TeacherUpdateDto { get; set; } = dto;
 }
 
-public class UpdateTeacherCommandHadnler(ITeacherRepository repo, IMapper mapper) : IRequestHandler<UpdateTeacherCommand, TeacherResponseDto>
+public class UpdateTeacherCommandHadnler(ITeacherRepository repo, IMapper mapper , IFileService fileService) : IRequestHandler<UpdateTeacherCommand, TeacherResponseDto>
 {
     public  async Task<TeacherResponseDto> Handle(UpdateTeacherCommand request, CancellationToken cancellationToken)
 
@@ -20,6 +21,17 @@ public class UpdateTeacherCommandHadnler(ITeacherRepository repo, IMapper mapper
 
         if (teacher == null)
             throw new Exception("Teacher Not Found!");
+
+        if (request.TeacherUpdateDto.Image != null && request.TeacherUpdateDto.Image.Length > 0)
+        {
+            if (!string.IsNullOrEmpty(teacher.User.ImagePath))
+            {
+                fileService.DeleteFile(teacher.User.ImagePath);
+            }
+
+            var savedPath = await fileService.SaveFileAsync(request.TeacherUpdateDto.Image, "users");
+            teacher.User.ImagePath = savedPath;
+        }
 
         mapper.Map(request.TeacherUpdateDto, teacher);
 
