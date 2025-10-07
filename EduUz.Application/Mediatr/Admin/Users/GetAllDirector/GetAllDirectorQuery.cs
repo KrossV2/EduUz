@@ -25,6 +25,7 @@ public class GetAllDirectorsQueryHandler(EduUzDbContext context)
                 PhoneNumber = d.User.PhoneNumber,
                 Username = d.User.Username,
                 SchoolId = d.SchoolId,
+                ImagePath = d.User.ImagePath,
                 SchoolName = d.School.Name
             })
             .ToListAsync(cancellationToken);

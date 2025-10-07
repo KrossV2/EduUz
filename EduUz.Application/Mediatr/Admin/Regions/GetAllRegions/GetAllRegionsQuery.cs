@@ -15,6 +15,7 @@ public class GetAllRegionQueryHandler(EduUzDbContext context) : IRequestHandler<
     {
         return context.Regions
             .Include(r=>r.Cities)
+            .ThenInclude(r=>r.Schools)
             .ToList();
     }
 }

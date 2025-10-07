@@ -140,7 +140,7 @@ public class DirectorsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPut("teachers/{id:int}")]
-    public async Task<ActionResult<TeacherResponseDto>> UpdateTeacher([FromBody] TeacherUpdateDto dto, [FromRoute] int id)
+    public async Task<ActionResult<TeacherResponseDto>> UpdateTeacher([FromForm] TeacherUpdateDto dto, [FromRoute] int id)
     {
         var result = await mediator.Send(new UpdateTeacherCommand(dto, id));
         return Ok(result);

@@ -148,7 +148,7 @@ public class AdminsController(IMediator mediator, EduUzDbContext context , IFile
     }
 
     [HttpPut("users/{id:int}")]
-    public async Task<ActionResult<UserResponseDto>> UpdateUser([FromBody] UserUpdateDto dto, [FromRoute] int id)
+    public async Task<ActionResult<UserResponseDto>> UpdateUser([FromForm] UserUpdateDto dto, [FromRoute] int id)
     {
         var result = await mediator.Send(new UpdateUserCommand(dto, id));
         return Ok(result);
@@ -162,14 +162,14 @@ public class AdminsController(IMediator mediator, EduUzDbContext context , IFile
     }
 
     [HttpPost("users/teacher")]
-    public async Task<ActionResult<TeacherResponseDto>> CreateTeacher([FromBody] TeacherCreateDto dto)
+    public async Task<ActionResult<TeacherResponseDto>> CreateTeacher([FromForm] TeacherCreateDto dto)
     {
         var result = await mediator.Send(new CreateTeacherCommand(dto));
         return Ok(result);
     }
 
     [HttpPost("users/director")]
-    public async Task<ActionResult<int>> CreateDirector([FromBody] DirectorCreateDto dto)
+    public async Task<ActionResult<int>> CreateDirector([FromForm] DirectorCreateDto dto)
     {
         var result = await mediator.Send(new CreateDirectorCommand(dto));
         return Ok(result);

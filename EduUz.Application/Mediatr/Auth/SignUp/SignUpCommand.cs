@@ -24,6 +24,7 @@ public class SignUpCommandHandler(IUserRepository userRepository, IPasswordHashe
             LastName = request.LastName,
             Email = request.Email,
             Username = request.Username,
+            PhoneNumber = request.PhoneNumber,
             PasswordHash = passwordHasher.HashPassword(request.Password),
             RoleId = request.RoleId,
             SchoolId = request.SchoolId > 0 ? request.SchoolId : null
@@ -46,6 +47,7 @@ public class SignUpCommandHandler(IUserRepository userRepository, IPasswordHashe
             LastName = user.LastName,
             Email = user.Email,
             Username = user.Username,
+            PhoneNumber = user.PhoneNumber,
             RoleName = role?.Name ?? "Unknown",
             SchoolName = school?.Name ?? "Not Assigned"
         };

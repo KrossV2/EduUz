@@ -81,6 +81,8 @@ Log.Logger = new LoggerConfiguration()
 
 var app = builder.Build();
 
+app.UseStaticFiles();
+
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<EduUzDbContext>();

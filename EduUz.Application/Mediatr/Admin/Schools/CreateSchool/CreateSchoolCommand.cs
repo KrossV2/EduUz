@@ -35,7 +35,7 @@ public class CreateSchoolCommandHandler : IRequestHandler<CreateSchoolCommand, S
         try
         {
             // Director mavjudligini tekshirish
-            var director = await _context.Directors
+            var director = await _context.Directors 
                 .Include(d => d.User)
                 .FirstOrDefaultAsync(d => d.Id == request.SchoolCreateDto.DirectorId, cancellationToken);
 
