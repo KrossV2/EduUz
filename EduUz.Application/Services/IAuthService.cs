@@ -35,8 +35,8 @@ new Claim("school_name", user.School?.Name ?? string.Empty),
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            "cafe.uz",
-            "cafe.uz",
+            "edu.uz",
+            "edu.uz",
             claims: claims,
             expires: DateTime.UtcNow.Add(TimeSpan.FromDays(1)),
             signingCredentials: credentials

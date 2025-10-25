@@ -332,8 +332,7 @@ public class EduUzDbContext : DbContext
            new Region { Id = 10, Name = "Samarqand viloyati" },
            new Region { Id = 11, Name = "Sirdaryo viloyati" },
            new Region { Id = 12, Name = "Surxondaryo viloyati" },
-           new Region { Id = 13, Name = "Toshkent shahri" },
-           new Region { Id = 14, Name = "Toshkent viloyati" }
+           new Region { Id = 13, Name = "Toshkent viloyati" }
        );
         });
 
