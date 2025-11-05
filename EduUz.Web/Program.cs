@@ -41,7 +41,7 @@ builder.Services.AddSwaggerGen(c =>
         License = new OpenApiLicense
         {
             Name = "Your License Name",
-            Url = new Uri("https://example.com/license") 
+            Url = new Uri("https://example.com/license")
         }
     });
 
@@ -64,11 +64,11 @@ builder.Services.AddSwaggerGen(c =>
                                 Type = ReferenceType.SecurityScheme,
                                 Id = "Bearer"
                             },
-                            Scheme = "oauth2", 
+                            Scheme = "oauth2",
                             Name = "Bearer",
                             In = ParameterLocation.Header
                         },
-                        new List<string>() 
+                        new List<string>()
                     }
             });
 });
@@ -100,11 +100,10 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseForwardedHeaders();
 
