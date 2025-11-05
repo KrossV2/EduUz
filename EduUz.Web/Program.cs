@@ -73,6 +73,15 @@ builder.Services.AddSwaggerGen(c =>
             });
 });
 
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
+    // Render/Docker uchun eng yaxshi yechim: barcha KnownProxies va Networks tozalash.
+    // Shunda ilova har qanday kelgan X-Forwarded-Proto sarlavhasiga ishonadi (Render uchun muhim).
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 
 // Serilog
 Log.Logger = new LoggerConfiguration()
@@ -98,16 +107,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseForwardedHeaders();
-
-builder.Services.Configure<ForwardedHeadersOptions>(options =>
-{
-    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-
-    // Render/Docker uchun eng yaxshi yechim: barcha KnownProxies va Networks tozalash.
-    // Shunda ilova har qanday kelgan X-Forwarded-Proto sarlavhasiga ishonadi (Render uchun muhim).
-    options.KnownNetworks.Clear();
-    options.KnownProxies.Clear();
-});
 
 app.UseHttpsRedirection();
 
