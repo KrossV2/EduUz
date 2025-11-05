@@ -6,6 +6,7 @@ using EduUz.Infrastructure.DiContainer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.HttpOverrides;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -97,6 +98,16 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseForwardedHeaders();
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
+    // Render/Docker uchun eng yaxshi yechim: barcha KnownProxies va Networks tozalash.
+    // Shunda ilova har qanday kelgan X-Forwarded-Proto sarlavhasiga ishonadi (Render uchun muhim).
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 
 app.UseHttpsRedirection();
 
