@@ -89,6 +89,18 @@ Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .CreateLogger();
 
+//Cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowAll",
+        builder =>
+        {
+            builder.AllowAnyOrigin()      // Barcha domenlarga ruxsat beradi
+                   .AllowAnyHeader()       // Barcha sarlavhalarga ruxsat beradi
+                   .AllowAnyMethod();      // Barcha HTTP usullariga (GET, POST, va h.k.) ruxsat beradi
+        });
+});
+
 var app = builder.Build();
 
 app.UseStaticFiles();
