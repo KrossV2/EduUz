@@ -92,12 +92,13 @@ Log.Logger = new LoggerConfiguration()
 //Cors
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "AllowAll",
-        builder =>
+    options.AddPolicy("AllowAll",
+        policy =>
         {
-            builder.AllowAnyOrigin()      // Barcha domenlarga ruxsat beradi
-                   .AllowAnyHeader()       // Barcha sarlavhalarga ruxsat beradi
-                   .AllowAnyMethod();      // Barcha HTTP usullariga (GET, POST, va h.k.) ruxsat beradi
+            policy
+                .AllowAnyOrigin() // yoki .WithOrigins("http://localhost:8080")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
         });
 });
 
@@ -116,6 +117,7 @@ using (var scope = app.Services.CreateScope())
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseCors("AllowAll");
 
 app.UseForwardedHeaders();
 
