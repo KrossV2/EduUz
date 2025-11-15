@@ -7,14 +7,17 @@ using EduUz.Application.Mediatr.Students.GetMyNotification;
 using EduUz.Application.Mediatr.Students.SubmitHomework;
 using EduUz.Core.Dtos;
 using EduUz.Core.Models;
+using EduUz.Infrastructure.Database;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace EduUz.Web.Controllers;
 
 [ApiController]
 [Route("api/student")]
-public class StudentsController(IMediator mediator) : ControllerBase
+public class StudentsController(IMediator mediator , EduUzDbContext context) : ControllerBase
 {
     [HttpGet("attendances")]
     public async Task<ActionResult<IEnumerable<Attendance>>> GetAllAttendances()
@@ -63,6 +66,63 @@ public class StudentsController(IMediator mediator) : ControllerBase
     {
         var result = await mediator.Send(new SubmitHomeworkCommand(homeworkId, request.StudentId, request.FileUrl, request.Comment));
         return Ok(result);
+    }
+
+    [HttpGet("students/getall")]
+    public async Task<IActionResult> GetAllStudents()
+    {
+        var students = await context.Students.ToListAsync();
+
+        return Ok(students);
+    }
+
+    [HttpGet("students/getbyid/{id}")]
+    public async Task<IActionResult> GetStudentById([FromRoute] int id)
+    {
+        var student = await context.Students.FindAsync(id);
+
+        return Ok(student);
+    }
+
+    [HttpGet("class/students/getbyid/{id}")]
+    public async Task<IActionResult> GetClassStudentsById([FromRoute] int id)
+    {
+        var students = await context.Students
+           .Where(s => s.ClassId == id)
+           .ToListAsync();
+
+        return Ok(students);
+    }
+
+    [HttpDelete("student/remove/{id}")]
+    public async Task<IActionResult> StudentRemove([FromRoute] int id)
+    {
+        var student = await context.Students.FindAsync(id);
+
+        if(student != null)
+        {
+            context.Students.Remove(student);
+            await context.SaveChangesAsync();
+
+            return Ok(student);
+        }
+
+        return BadRequest();
+    }
+
+    [HttpPut("student/update/{id}")]
+    public async Task<IActionResult> UpdateStudent(StudentUpdateDto dto , [FromRoute] int id)
+    {
+        var student = await context.Students.FindAsync(id);
+
+        if(student != null)
+        {
+            context.Students.Update(student);
+            await context.SaveChangesAsync();
+            return Ok(student);
+        }
+
+        return BadRequest();
     }
 }
 

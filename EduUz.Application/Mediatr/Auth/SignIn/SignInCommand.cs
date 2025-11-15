@@ -47,6 +47,7 @@ public class SignInCommandHandler(
 
         return new SignInResponseDto()
         {
+            Id = user.Id,
             AccessToken = token,
         };
     }

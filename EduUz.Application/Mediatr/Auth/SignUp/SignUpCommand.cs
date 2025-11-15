@@ -12,11 +12,11 @@ public class SignUpCommand(UserCreateDto request) : IRequest<UserResponseDto>
     public UserCreateDto Request { get; } = request;
 }
 
-public class SignUpCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, EduUzDbContext context , IMapper mappper) : IRequestHandler<SignUpCommand, UserResponseDto>
+public class SignUpCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, EduUzDbContext context, IMapper mappper) : IRequestHandler<SignUpCommand, UserResponseDto>
 {
     public async Task<UserResponseDto> Handle(SignUpCommand command, CancellationToken cancellationToken)
     {
-        var request  = command.Request;
+        var request = command.Request;
 
         var user = new User()
         {
@@ -29,8 +29,6 @@ public class SignUpCommandHandler(IUserRepository userRepository, IPasswordHashe
             RoleId = request.RoleId,
             SchoolId = request.SchoolId > 0 ? request.SchoolId : null
         };
-
-
 
         context.Users.Add(user);
         await context.SaveChangesAsync();

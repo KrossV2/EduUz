@@ -2,14 +2,16 @@
 using EduUz.Application.Repositories.Interfaces;
 using EduUz.Core.Dtos;
 using EduUz.Core.Models;
+using EduUz.Infrastructure.Database;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace EduUz.Application.Mediatr.Teachers.Homeworks.CreateHomework;
 
 public record CreateHomeworkCommand(HomeworkCreateDto dto) : IRequest<HomeworkResponseDto>;
 
 
-public class CreateHomeworkCommandHandler(IHomeworkRepository repo, IMapper mapper) : IRequestHandler<CreateHomeworkCommand, HomeworkResponseDto>
+public class CreateHomeworkCommandHandler(IHomeworkRepository repo, IMapper mapper , EduUzDbContext context) : IRequestHandler<CreateHomeworkCommand, HomeworkResponseDto>
 {
     public async Task<HomeworkResponseDto> Handle(CreateHomeworkCommand request, CancellationToken cancellationToken)
     {
@@ -19,6 +21,17 @@ public class CreateHomeworkCommandHandler(IHomeworkRepository repo, IMapper mapp
 
             await repo.AddAsync(homework);
             await repo.SaveChangesAsync();
+
+            var students = await context.Students
+           .Where(s => s.ClassId == homework.ClassId)
+           .ToListAsync(cancellationToken);
+
+            foreach (var student in students)
+            {
+                student.Homework.Add(homework);
+            }
+
+            await context.SaveChangesAsync(cancellationToken);
 
             var response = mapper.Map<HomeworkResponseDto>(homework);
 
